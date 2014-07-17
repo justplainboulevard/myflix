@@ -1,21 +1,23 @@
+
 source 'https://rubygems.org'
 ruby '2.1.1'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
-gem 'rails', '4.1.1'
 gem 'haml-rails'
+gem 'jquery-rails'
+gem 'rails', '4.1.1'
 gem 'sass-rails'
 gem 'uglifier'
-gem 'jquery-rails'
 
 group :development do
-  gem 'sqlite3'
+  gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'pry'
   gem 'pry-nav'
+  gem 'sqlite3'
   gem 'thin'
-  gem "better_errors"
-  gem "binding_of_caller"
 end
 
 group :development, :test do
@@ -30,4 +32,5 @@ group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
 
