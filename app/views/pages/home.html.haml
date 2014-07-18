@@ -1,0 +1,30 @@
+
+%article.video_category
+  %header
+    %h3= link_to "TV Commedies"
+  .videos.row
+    - if !@videos.nil?
+      - @videos.each do |video|
+        .video.col-sm-2
+          = link_to "", nil do
+            %img(src="/images#{video.poster_small_url}")
+
+%article.video_category
+  %header
+    %h3= link_to "TV Dramas"
+  .videos.row
+    - if !@videos.nil?
+      - @videos.each do |video|
+        .video.col-sm-2
+          = link_to "", nil do
+            %img(src="/images#{video.poster_small_url}")
+
+%article.video_category
+  %header
+    %h3= link_to "Reality TV"
+  .videos.row
+    - if !@videos.nil?
+      - @videos.each do |video|
+        .video.col-sm-2
+          = link_to "", nil do
+            %img(src="/images#{video.poster_small_url}")
