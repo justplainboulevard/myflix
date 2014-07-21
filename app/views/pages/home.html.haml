@@ -1,30 +1,11 @@
 
-%article.video_category
-  %header
-    %h3= link_to "TV Commedies"
-  .videos.row
-    - if !@videos.nil?
-      - @videos.each do |video|
-        .video.col-sm-2
-          = link_to "", nil do
-            %img{ src: "/assets/images/poster_small_url/#{video.poster_small_url}" }
-
-%article.video_category
-  %header
-    %h3= link_to "TV Dramas"
-  .videos.row
-    - if !@videos.nil?
-      - @videos.each do |video|
-        .video.col-sm-2
-          = link_to "", nil do
-            %img{ src: "/assets/images/poster_small_url/#{video.poster_small_url}" }
-
-%article.video_category
-  %header
-    %h3= link_to "Reality TV"
-  .videos.row
-    - if !@videos.nil?
-      - @videos.each do |video|
-        .video.col-sm-2
-          = link_to "", nil do
-            %img{ src: "/assets/images/poster_small_url/#{video.poster_small_url}" }
+- @categories.each do |category|
+  %article.video_category
+    %header
+      %h3= link_to category.name, category_path(category)
+    .videos.row
+      - if !category.videos.nil?
+        - category.videos.each do |video|
+          .video.col-sm-2
+            = link_to video_path(video), nil do
+              %img(src="/poster_small/#{video.poster_small_url}")
