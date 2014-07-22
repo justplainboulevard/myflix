@@ -1,9 +1,22 @@
+# == Schema Information
+#
+# Table name: videos
+#
+#  id               :integer          not null, primary key
+#  title            :string(255)
+#  description      :text
+#  poster_small_url :string(255)
+#  poster_large_url :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 
 require 'rails_helper'
 
 RSpec.describe Video, type: :model do
 
-  it "saves itself" do
+  it 'saves itself' do
     new_video = Video.new(title: 'My Video Title', description: 'My lengthy video description.', poster_small_url: 'my_small_cover_url.jpg', poster_large_url: 'my_large_cover_url.jpg')
     new_video.save
 
