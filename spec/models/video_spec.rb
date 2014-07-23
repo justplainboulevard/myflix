@@ -26,4 +26,14 @@ RSpec.describe Video, type: :model do
     expect(saved_video.poster_small_url).to eq('my_small_cover_url.jpg')
     expect(saved_video.poster_large_url).to eq('my_large_cover_url.jpg')
   end
+
+  it 'has many categories' do
+    another_video = Video.create(title: 'Another Video Title', description: 'Another lengthy video description.', poster_small_url: 'another_small_cover_url.jpg', poster_large_url: 'another_large_cover_url.jpg')
+    category_one = Category.create(name: 'ZZZ')
+    category_two = Category.create(name: 'AAA')
+    video_category_one = VideoCategory.create(category_id: category_one.id, video_id: another_video.id)
+    video_category_two = VideoCategory.create(category_id: category_two.id, video_id: another_video.id)
+
+    expect(another_video.categories).to eq([category_two, category_one])
+  end
 end
