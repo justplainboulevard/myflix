@@ -36,4 +36,16 @@ RSpec.describe Video, type: :model do
 
     expect(another_video.categories).to eq([category_two, category_one])
   end
+
+  it 'does not save without a title' do
+    video = Video.create(description: 'Video description!')
+
+    expect(Video.count).to eq(0)
+  end
+
+  it 'does not save without a description' do
+    video = Video.create(title: 'Video Title')
+
+    expect(Video.count).to eq(0)
+  end
 end
