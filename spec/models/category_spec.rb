@@ -1,23 +1,19 @@
+# == Schema Information
+#
+# Table name: categories
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
 
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
 
-  it 'saves itself' do
-    new_category = Category.new(name: 'My Category')
-    new_category.save
+  it { should have_many(:video_categories) }
+  it { should have_many(:videos).through(:video_categories) }
 
-    saved_category = Category.first
-    expect(saved_category.name).to eq('My Category')
-  end
-
-  it 'has many videos' do
-    another_category = Category.create(name: 'Another Category')
-    video_one = Video.create(title: 'ZZZ Video', description: 'ZZZ video description.')
-    video_two = Video.create(title: 'AAA Video', description: 'AAA video description.')
-    video_category_one = VideoCategory.create(category_id: another_category.id, video_id: video_one.id)
-    video_category_two = VideoCategory.create(category_id: another_category.id, video_id: video_two.id)
-
-    expect(another_category.videos).to eq([video_two, video_one])
-  end
+  it { should validate_presence_of(:name) }
 end
