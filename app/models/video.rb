@@ -19,4 +19,9 @@ class Video < ActiveRecord::Base
   validates_presence_of :title, :description
   validates :title, length: { maximum: 150 }
   validates :description, length: { maximum: 1500 }
+
+  def self.search_by_title(query)
+    return [] if query.blank?
+    where("title LIKE ?", "%#{query}%").order('created_at DESC')
+  end
 end
