@@ -25,38 +25,38 @@ RSpec.describe Video, type: :model do
 
   describe '.search_by_title' do
     it 'returns an empty array if no match' do
-       video_one = Video.create(title: 'My Video One', description: 'My video one description.')
-       video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
+      video_one = Video.create(title: 'My Video One', description: 'My video one description.')
+      video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
 
-       expect(Video.search_by_title('Three')).to eq([])
+      expect(Video.search_by_title('Three')).to eq([])
     end
 
     it 'returns an array with one video if an exact match' do
-       video_one = Video.create(title: 'My Video One', description: 'My video one description.')
-       video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
+      video_one = Video.create(title: 'My Video One', description: 'My video one description.')
+      video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
 
-       expect(Video.search_by_title('My Video One')).to eq([video_one])
+      expect(Video.search_by_title('My Video One')).to eq([video_one])
     end
 
     it 'returns an array with one video if a partial match' do
-       video_one = Video.create(title: 'My Video One', description: 'My video one description.')
-       video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
+      video_one = Video.create(title: 'My Video One', description: 'My video one description.')
+      video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
 
-       expect(Video.search_by_title('ne')).to eq([video_one])
+      expect(Video.search_by_title('ne')).to eq([video_one])
     end
 
     it 'returns an array of all matches ordered by created_at' do
-       video_one = Video.create(title: 'My Video One', description: 'My video one description.', created_at: 1.day.ago)
-       video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
+      video_one = Video.create(title: 'My Video One', description: 'My video one description.', created_at: 1.day.ago)
+      video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
 
-       expect(Video.search_by_title('My Video')).to eq([video_two, video_one])
+      expect(Video.search_by_title('My Video')).to eq([video_two, video_one])
     end
 
     it 'returns an empty array if the query is an empty string' do
-       video_one = Video.create(title: 'My Video One', description: 'My video one description.')
-       video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
+      video_one = Video.create(title: 'My Video One', description: 'My video one description.')
+      video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
 
-       expect(Video.search_by_title('')).to eq([])
+      expect(Video.search_by_title('')).to eq([])
     end
   end
 end

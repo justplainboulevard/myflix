@@ -11,7 +11,12 @@
 class Category < ActiveRecord::Base
 
   has_many :video_categories
-  has_many :videos, -> { order('title') }, through: :video_categories
+  has_many :videos, -> { order('created_at DESC') }, through: :video_categories
+  # As per solution, could just change the order specified in this association to 'created_at DESC'
 
   validates :name, presence: true
+
+  def most_recent
+    videos.first(6)
+  end
 end
