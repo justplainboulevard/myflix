@@ -1,8 +1,8 @@
 
 Myflix::Application.routes.draw do
 
-  get '/home', to: 'pages#home'
-  # get '/videos', to: 'pages#home'
+  # get '/home', to: 'pages#home'
+  get '/home', to: 'videos#index'
 
   resources :videos, except: [:index] do
     collection do
