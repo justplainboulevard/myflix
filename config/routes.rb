@@ -1,11 +1,13 @@
 
-Myflix::Application.routes.draw do
+Rails.application.routes.draw do
 
-  get '/', to: 'sessions#front'
-  get '/register', to: 'users#new'
+  root to: 'pages#front'
+
+  get 'register', to: 'users#new'
   get 'signin', to: 'sessions#new'
-  post 'signin', to: 'sessions#new'
-  get '/home', to: 'videos#index'
+  post 'signin', to: 'sessions#create'
+  get 'signout', to: 'sessions#destroy'
+  get 'home', to: 'videos#index'
 
   resources :users, except: [:new, :index]
   resources :videos, except: [:index] do

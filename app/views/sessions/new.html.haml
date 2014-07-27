@@ -7,7 +7,7 @@
           %h1 Sign in
         %fieldset
           = bootstrap_form_tag url: 'signin', layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-6' do |f|
-            = f.email_field :email_address
-            = f.password_field :password
+            = f.email_field :email_address, value: params[:email_address] || ''
+            = f.password_field :password, value: params[:password] || ''
             = f.form_group do
               = f.submit 'Sign In'
