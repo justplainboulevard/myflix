@@ -14,20 +14,22 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     it 'renders the index template' do
-
       get :index
       expect(response).to render_template :index
     end
 
-    it 'responds successfully with an HTTP 200 status code' do
-
+    it 'responds successfully' do
       get :index
       expect(response).to be_success
+    end
+
+    it 'responds with an HTTP 200 status code' do
+      get :index
       expect(response).to have_http_status(200)
     end
   end
 
-  describe 'GET show' do
+  describe 'GET #show' do
 
     it 'sets the @category instance variable' do
     end
