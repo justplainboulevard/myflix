@@ -33,27 +33,27 @@ RSpec.describe UsersController do
 
   describe 'POST #create' do
 
-    context 'when the input is valid' do
+    context 'with valid attributes' do
 
       it 'creates a user record' do
-        post :create, user: { email_address: 'newuser@example.com', password_digest: 'password', full_name: 'New User' }
-        expect(User.first.email_address).to eq('newuser@example.com')
+        expect{ post :create, user: FactoryGirl.attributes_for(:user) }.to change(User, :count).by(1)
       end
 
       it 'redirects to the sign in path' do
-        post :create, user: { email_address: 'newuser@example.com', password_digest: 'password', full_name: 'New User' }
+        post :create, user: FactoryGirl.attributes_for(:user)
         expect(response).to redirect_to signin_path
       end
     end
 
-    context 'when the input is invalid' do
+    context 'with invalid attributes' do
 
       it 'does not create a user record' do
-        post :create, user: { password_digest: 'password', full_name: 'New User' }
-        expect(User.first.email_address).to eq('newuser@example.com')
+        post :create, user: FactoryGirl.attributes_for(:user, email_address: '')
+        expect(User.first).to eq(nil)
       end
 
       it 'renders the new template' do
+        post :create, user: FactoryGirl.attributes_for(:user, email_address: '')
         expect(response).to render_template :new
       end
     end
