@@ -17,7 +17,10 @@ group :development do
   gem 'annotate', '~> 2.6.5'
   gem 'better_errors', '~> 1.1.0'
   gem 'binding_of_caller'
-  gem 'pry', '~> 0.10.0'
+  gem 'guard-annotate', '~> 1.1.0'
+  gem 'guard-rails', '~> 0.5.3'
+  gem 'guard-rspec', require: false
+  gem 'pry'
   gem 'pry-doc', '~> 0.6.0'
   gem 'thin', '~> 1.6.2'
 end
