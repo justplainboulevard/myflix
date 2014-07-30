@@ -36,11 +36,11 @@ RSpec.describe UsersController do
     context 'with valid attributes' do
 
       it 'creates a user record' do
-        expect{ post :create, user: FactoryGirl.attributes_for(:user) }.to change(User, :count).by(1)
+        expect{ post :create, user: Fabricate.attributes_for(:user) }.to change(User, :count).by(1)
       end
 
       it 'redirects to the sign in path' do
-        post :create, user: FactoryGirl.attributes_for(:user)
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to signin_path
       end
     end
@@ -48,12 +48,12 @@ RSpec.describe UsersController do
     context 'with invalid attributes' do
 
       it 'does not create a user record' do
-        post :create, user: FactoryGirl.attributes_for(:user, email_address: '')
+        post :create, user: Fabricate.attributes_for(:user, email_address: '')
         expect(User.first).to eq(nil)
       end
 
       it 'renders the new template' do
-        post :create, user: FactoryGirl.attributes_for(:user, email_address: '')
+        post :create, user: Fabricate.attributes_for(:user, email_address: '')
         expect(response).to render_template :new
       end
     end

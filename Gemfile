@@ -28,7 +28,7 @@ end
 group :development, :test do
   gem 'capybara', '~> 2.4.1'
   gem 'fabrication', '~> 2.11.3'
-  # gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'faker', '~> 1.4.2'
   gem 'rspec-rails', '~> 3.0.1'
 end
 
