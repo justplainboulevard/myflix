@@ -6,8 +6,8 @@ RSpec.describe CategoriesController, type: :controller do
   describe 'GET #index' do
 
     it 'sets the @categories instance variable' do
-      category_1 = Category.create(name: 'cat_1')
-      category_2 = Category.create(name: 'cat_2')
+      category_1 = Fabricate(:category)
+      category_2 = Fabricate(:category)
 
       get :index
       expect(assigns(:categories)).to match_array([category_1, category_2])
@@ -32,9 +32,10 @@ RSpec.describe CategoriesController, type: :controller do
   describe 'GET #show' do
 
     it 'sets the @category instance variable' do
-    end
+      category = Fabricate(:category)
 
-    it 'renders the show template' do
+      get :show, id: category.id
+      expect(assigns(:category)).to eq(category)
     end
   end
 end
