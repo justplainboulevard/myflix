@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-RSpec.describe UsersController do
+RSpec.describe UsersController, type: :controller do
 
   describe 'GET #new' do
 
@@ -33,9 +33,13 @@ RSpec.describe UsersController do
 
   describe 'POST #create' do
 
+    it 'sets the @user instance variable' do
+
+    end
+
     context 'with valid attributes' do
 
-      it 'creates a user record' do
+      it 'creates a user in the database' do
         expect{ post :create, user: Fabricate.attributes_for(:user) }.to change(User, :count).by(1)
       end
 
@@ -47,7 +51,7 @@ RSpec.describe UsersController do
 
     context 'with invalid attributes' do
 
-      it 'does not create a user record' do
+      it 'does not create a user in the database' do
         post :create, user: Fabricate.attributes_for(:user, email_address: '')
         expect(User.first).to eq(nil)
       end
