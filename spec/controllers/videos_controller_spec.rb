@@ -10,9 +10,7 @@ RSpec.describe VideosController, type: :controller do
 
     context 'with an authenicated user' do
 
-      before do
-        session[:user_id] = current_user.id
-      end
+      before { session[:user_id] = current_user.id }
 
       it 'sets the @video instance variable' do
         get :show, id: video.id
@@ -36,9 +34,7 @@ RSpec.describe VideosController, type: :controller do
 
     context 'with an authenicated user' do
 
-      before do
-        session[:user_id] = current_user.id
-      end
+      before { session[:user_id] = current_user.id }
 
       it 'sets the @videos instance variable' do
         post :search, query: 'AA'
