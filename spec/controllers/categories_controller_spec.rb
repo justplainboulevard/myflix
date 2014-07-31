@@ -13,7 +13,7 @@ RSpec.describe CategoriesController, type: :controller do
       expect(assigns(:categories)).to match_array([category_1, category_2])
     end
 
-    it 'renders the index template' do
+    it 'renders the categories/index template' do
       get :index
       expect(response).to render_template :index
     end
