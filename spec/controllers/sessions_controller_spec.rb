@@ -8,17 +8,18 @@ RSpec.describe SessionsController, type: :controller do
     context 'with an authenicated user' do
 
       before { session[:user_id] = Fabricate(:user).id }
+      before { get :new }
 
       it 'redirects the user to the home path' do
-        get :new
         expect(response).to redirect_to home_path
       end
     end
 
     context 'with an unauthenicated user' do
 
+      before { get :new }
+
       it 'renders the sessions/new template' do
-        get :new
         expect(response).to render_template :new
       end
     end
@@ -26,9 +27,9 @@ RSpec.describe SessionsController, type: :controller do
 
   describe 'POST #create' do
 
-    context 'with valid credentials' do
+    let(:user) { Fabricate(:user) }
 
-      let(:user) { Fabricate(:user) }
+    context 'with valid credentials' do
 
       before { post :create, email_address: user.email_address, password: user.password }
 
@@ -46,8 +47,6 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     context 'with invalid credentials' do
-
-      let(:user) { Fabricate(:user ) }
 
       before { post :create, email_address: user.email_address + 'abcde', password: user.password }
 

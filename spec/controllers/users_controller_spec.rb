@@ -5,28 +5,25 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #new' do
 
+    before { get :new }
+
     it 'sets the @user instance variable' do
-      get :new
       expect(assigns(:user)).to be_new_record
     end
 
     it 'creates an instance of the User class' do
-      get :new
       expect(assigns(:user)).to be_instance_of(User)
     end
 
     it 'renders the users/new template' do
-      get :new
       expect(response).to render_template :new
     end
 
     it 'responds successfully' do
-      get :new
       expect(response).to be_success
     end
 
     it 'responds with an HTTP 200 status code' do
-      get :new
       expect(response).to have_http_status(200)
     end
   end
