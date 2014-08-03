@@ -11,6 +11,8 @@ class ReviewsController < ApplicationController
       flash[:success] = 'Your review has been posted. Thanks!'
       redirect_to video_path(@video)
     else
+      flash[:danger] = 'Your review can\'t be blank.'
+      @reviews = @video.reviews.reload
       render 'videos/show'
     end
   end

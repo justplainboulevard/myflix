@@ -15,7 +15,7 @@ class Video < ActiveRecord::Base
 
   has_many :video_categories
   has_many :categories, -> { order('name') }, through: :video_categories
-  has_many :reviews
+  has_many :reviews, -> { order('created_at DESC') }
 
   validates_presence_of :title, :description
   validates :title, length: { maximum: 150 }

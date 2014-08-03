@@ -19,7 +19,7 @@ RSpec.describe Category, type: :model do
 
   describe '#recent_videos' do
 
-    let(:category) { Category.create(name: 'Spectacular Box Office Flops') }
+    let(:category) { Fabricate(:category) }
 
     it 'returns an empty array if there are no videos in the category' do
 
@@ -31,11 +31,13 @@ RSpec.describe Category, type: :model do
       video_one = Video.create(title: 'My Video One', description: 'My video one description.')
       video_two = Video.create(title: 'My Video Two', description: 'My video two description.')
       video_three = Video.create(title: 'My Video Three', description: 'My video three description.')
+      video_four = Fabricate(:video)
       video_category_one = VideoCategory.create(category_id: category.id, video_id: video_one.id)
       video_category_two = VideoCategory.create(category_id: category.id, video_id: video_two.id)
       video_category_three = VideoCategory.create(category_id: category.id, video_id: video_three.id)
+      video_category_four = Fabricate(:video_category, category_id: category.id, video_id: video_four.id)
 
-      expect(category.most_recent).to include(video_one, video_two, video_three)
+      expect(category.most_recent).to include(video_one, video_two, video_three, video_four)
     end
 
     it 'returns an array of only six videos if there are more than six videos in the category' do

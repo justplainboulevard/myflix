@@ -4,18 +4,19 @@ require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
 
   let(:current_user) { Fabricate(:user) }
-  let(:selected_video) { Fabricate(:video) }
+  let(:selected_video) { Fabricate(:video) do
+    reviews { 3.times.map { Fabricate(:review) } }
+    end }
 
   describe 'POST #create' do
-
-    let(:valid_review_attributes) { Fabricate.attributes_for(:review) }
-    let(:invalid_review_attributes) { Fabricate.attributes_for(:review, body: '') }
 
     context 'with an authenicated user' do
 
       before { session[:user_id] = current_user.id }
 
       context 'with valid attributes' do
+
+        let(:valid_review_attributes) { Fabricate.attributes_for(:review) }
 
         before { post :create, review: valid_review_attributes, video_id: selected_video.id }
 
@@ -28,15 +29,19 @@ RSpec.describe ReviewsController, type: :controller do
         end
 
         it 'associates the @review instance variable with the @video instance variable' do
-          expect(Review.first.video).to eq(selected_video)
+          expect(Review.last.video).to eq(selected_video)
         end
 
-        it 'associates the @review instance variable  with the current user' do
-          expect(Review.first.author).to eq(current_user)
+        it 'associates the @review instance variable with the current user' do
+          expect(Review.last.author).to eq(current_user)
         end
 
         it 'creates a review in the database' do
-          expect(Review.count).to eq(1)
+          expect {}.to change { Review.count }.by(1)
+        end
+
+        it 'flashes a success alert' do
+          expect(flash[:success]).not_to be_blank
         end
 
         it 'redirects the user to the video path' do
@@ -45,6 +50,8 @@ RSpec.describe ReviewsController, type: :controller do
       end
 
       context 'with invalid attributes' do
+
+        let(:invalid_review_attributes) { Fabricate.attributes_for(:review, body: '') }
 
         before { post :create, review: invalid_review_attributes, video_id: selected_video.id }
 
@@ -57,11 +64,15 @@ RSpec.describe ReviewsController, type: :controller do
         end
 
         it 'does not create a review in the database' do
-          expect {}.to change {Review.count}.by(0)
+          expect {}.to change { Review.count }.by(0)
         end
 
         it 'sets the @reviews instance variable' do
-          expect(assigns(:reviews)).to match_array(existing_reviews)
+          expect(assigns(:reviews)).to match_array(selected_video.reviews.reload)
+        end
+
+        it 'flashes a danger alert' do
+          expect(flash[:danger]).not_to be_blank
         end
 
         it 'renders to videos/show template' do
@@ -71,6 +82,8 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     context 'with an unauthenicated user' do
+
+      let(:valid_review_attributes) { Fabricate.attributes_for(:review) }
 
       before { post :create, review: valid_review_attributes, video_id: selected_video.id }
 
