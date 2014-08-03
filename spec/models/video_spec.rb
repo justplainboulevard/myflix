@@ -17,6 +17,7 @@ RSpec.describe Video, type: :model do
 
   it { should have_many(:video_categories) }
   it { should have_many(:categories).through(:video_categories) }
+  it { should have_many(:reviews).order('created_at DESC') }
 
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description) }

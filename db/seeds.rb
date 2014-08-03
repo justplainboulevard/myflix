@@ -236,3 +236,8 @@ VideoCategory.create([
   { video_id: 30, category_id: 19 }
 ])
 
+Fabricate.times(25, :user)
+
+250.times do
+  Fabricate(:review, user_id: (1..25).to_a.sample, video_id: (1..30).to_a.sample)
+end
