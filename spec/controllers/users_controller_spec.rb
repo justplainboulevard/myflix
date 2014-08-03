@@ -42,7 +42,7 @@ RSpec.describe UsersController, type: :controller do
         expect(User.count).to eq(1)
       end
 
-      it 'redirects to the sign in path' do
+      it 'redirects the user to the sign in path' do
         expect(response).to redirect_to signin_path
       end
     end
