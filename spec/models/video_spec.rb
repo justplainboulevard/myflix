@@ -11,6 +11,8 @@
 #  updated_at       :datetime
 #
 
+# TO DO: add #average_rating test
+
 require 'rails_helper'
 
 RSpec.describe Video, type: :model do
