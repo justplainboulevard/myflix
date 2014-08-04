@@ -18,6 +18,10 @@ RSpec.describe ReviewsController, type: :controller do
 
         let(:valid_review_attributes) { Fabricate.attributes_for(:review) }
 
+        it 'creates a review in the database' do
+          expect { post :create, review: valid_review_attributes, video_id: selected_video.id }.to change { Review.count }.by(1)
+        end
+
         before { post :create, review: valid_review_attributes, video_id: selected_video.id }
 
         it 'sets the @video instance variable' do
@@ -36,10 +40,6 @@ RSpec.describe ReviewsController, type: :controller do
           expect(Review.last.author).to eq(current_user)
         end
 
-        it 'creates a review in the database' do
-          expect {}.to change { Review.count }.by(1)
-        end
-
         it 'flashes a success alert' do
           expect(flash[:success]).not_to be_blank
         end
@@ -53,6 +53,10 @@ RSpec.describe ReviewsController, type: :controller do
 
         let(:invalid_review_attributes) { Fabricate.attributes_for(:review, body: '') }
 
+        it 'does not create a review in the database' do
+          expect { post :create, review: invalid_review_attributes, video_id: selected_video.id }.to change { Review.count }.by(0)
+        end
+
         before { post :create, review: invalid_review_attributes, video_id: selected_video.id }
 
         it 'sets the @video instance variable' do
@@ -61,10 +65,6 @@ RSpec.describe ReviewsController, type: :controller do
 
         it 'sets the @review instance variable' do
           expect(assigns(:review)).to be_instance_of(Review)
-        end
-
-        it 'does not create a review in the database' do
-          expect {}.to change { Review.count }.by(0)
         end
 
         it 'sets the @reviews instance variable' do
