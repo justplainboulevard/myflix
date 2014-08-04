@@ -238,6 +238,14 @@ VideoCategory.create([
 
 Fabricate.times(25, :user)
 
-250.times do
-  Fabricate(:review, user_id: (1..25).to_a.sample, video_id: (1..30).to_a.sample)
+User.all.each do |user|
+
+  Video.all.each do |video|
+
+    Fabricate(:review, user_id: user.id, video_id: video.id)
+  end
+
+  3.times do
+    Fabricate(:queue_item, user_id: user.id, video_id: (1..30).to_a.sample, list_order: Fabricate.sequence(1))
+  end
 end

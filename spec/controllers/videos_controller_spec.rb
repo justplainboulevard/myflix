@@ -32,7 +32,6 @@ RSpec.describe VideosController, type: :controller do
         expect(response).to redirect_to root_path
       end
     end
-
   end
 
   describe 'GET #show' do
