@@ -11,9 +11,18 @@ module Myflix
     config.active_support.escape_html_entities_in_json = true
 
     config.assets.enabled = true
+
     config.generators do |g|
       g.orm :active_record
       g.template_engine :haml
+      g.test_framework :rspec,
+          :fixtures => true,
+          :view_specs => true,
+          :helper_specs => true,
+          :routing_specs => true,
+          :controller_specs => true,
+          :request_specs => true
+      g.fixture_replacement :fabrication, :dir => 'spec/fabricators'
     end
   end
 end
