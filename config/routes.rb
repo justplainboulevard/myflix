@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create]
   end
   resources :categories
+  resources :queue_items, only: [:create, :destroy]
 
   get 'ui(/:action)', controller: 'ui'
 end
