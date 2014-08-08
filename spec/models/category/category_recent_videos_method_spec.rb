@@ -12,11 +12,6 @@ require 'rails_helper'
 
 RSpec.describe Category, type: :model do
 
-  it { should have_many(:video_categories) }
-  it { should have_many(:videos).through(:video_categories) }
-
-  it { should validate_presence_of(:name) }
-
   describe '#recent_videos' do
 
     let(:category) { Fabricate(:category) }

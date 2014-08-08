@@ -19,6 +19,17 @@ class QueueItemsController < ApplicationController
     end
   end
 
+  def update_queue
+    params[:queue_items].each do |array_item|
+      queue_item = QueueItem.find(array_item['id'])
+      queue_item.update_attributes(list_order: array_item['list_order'])
+    end
+    current_user.queue_items.each_with_index do |queue_item, index|
+      queue_item.update_attributes(list_order: index + 1)
+    end
+    redirect_to my_queue_path
+  end
+
   def destroy
     @queue_item = QueueItem.find(params[:id])
     @video = @queue_item.video
