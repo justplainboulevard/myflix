@@ -23,7 +23,7 @@ class QueueItemsController < ApplicationController
     begin
       update_queue_items
       normalize_list_order
-    rescue
+    rescue ActiveRecord::RecordInvalid
       flash[:error] = 'You entered an invalid list order.'
     end
     redirect_to my_queue_path
@@ -60,7 +60,7 @@ private
     ActiveRecord::Base.transaction do
       params[:queue_items].each do |array_item|
         queue_item = QueueItem.find(array_item['id'])
-        queue_item.update_attributes!(list_order: array_item['list_order']) if queue_item.creator == current_user
+        queue_item.update_attributes!(list_order: array_item['list_order']) if queue_item.user == current_user
       end
     end
   end
