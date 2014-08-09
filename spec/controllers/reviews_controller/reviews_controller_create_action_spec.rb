@@ -12,7 +12,9 @@ RSpec.describe ReviewsController, type: :controller do
 
     context 'with an authenicated user' do
 
-      before { session[:user_id] = current_user.id }
+      before :each do
+        session[:user_id] = current_user.id
+      end
 
       context 'with valid attributes' do
 
@@ -22,7 +24,9 @@ RSpec.describe ReviewsController, type: :controller do
           expect { post :create, review: valid_review_attributes, video_id: selected_video.id }.to change { Review.count }.by(1)
         end
 
-        before { post :create, review: valid_review_attributes, video_id: selected_video.id }
+        before :each do
+          post :create, review: valid_review_attributes, video_id: selected_video.id
+        end
 
         it 'sets the @video instance variable' do
           expect(assigns(:video)).to eq(selected_video)
@@ -57,7 +61,9 @@ RSpec.describe ReviewsController, type: :controller do
           expect { post :create, review: invalid_review_attributes, video_id: selected_video.id }.to change { Review.count }.by(0)
         end
 
-        before { post :create, review: invalid_review_attributes, video_id: selected_video.id }
+        before :each do
+          post :create, review: invalid_review_attributes, video_id: selected_video.id
+        end
 
         it 'sets the @video instance variable' do
           expect(assigns(:video)).to eq(selected_video)
@@ -78,6 +84,10 @@ RSpec.describe ReviewsController, type: :controller do
         it 'renders to videos/show template' do
           expect(response).to render_template 'videos/show'
         end
+
+        it 'responds with an HTTP 200 status code' do
+          expect(response).to have_http_status(200)
+        end
       end
     end
 
@@ -85,10 +95,16 @@ RSpec.describe ReviewsController, type: :controller do
 
       let(:valid_review_attributes) { Fabricate.attributes_for(:review) }
 
-      before { post :create, review: valid_review_attributes, video_id: selected_video.id }
+      before :each do
+        post :create, review: valid_review_attributes, video_id: selected_video.id
+      end
 
       it 'redirects the user to the root path' do
         expect(response).to redirect_to root_path
+      end
+
+      it 'responds with an HTTP 302 status code' do
+        expect(response).to have_http_status(302)
       end
     end
   end

@@ -17,16 +17,6 @@ require 'rails_helper'
 
 RSpec.describe Video, type: :model do
 
-  it { should have_many(:video_categories) }
-  it { should have_many(:categories).through(:video_categories) }
-  it { should have_many(:reviews).order('created_at DESC') }
-  it { should have_many(:queue_items) }
-
-  it { should validate_presence_of(:title) }
-  it { should validate_presence_of(:description) }
-  it { should ensure_length_of(:title).is_at_most(150) }
-  it { should ensure_length_of(:description).is_at_most(1_500) }
-
   describe '.search_by_title' do
 
     let(:videos) { Fabricate.times(5, :video) }

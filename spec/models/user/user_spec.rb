@@ -16,7 +16,7 @@ RSpec.describe User, type: :model do
 
   it { should have_secure_password }
 
-  it { should have_many(:queue_items) }
+  it { should have_many(:queue_items).order('list_order') }
   it { should have_many(:reviews) }
 
   it { should validate_presence_of(:email_address) }
