@@ -15,14 +15,18 @@ RSpec.describe QueueItemsController, type: :controller do
 
       context 'if the current user owns the selected queue item' do
 
-        let(:queue_item) { Fabricate(:queue_item, user_id: current_user.id) }
-
         before :each do
+          queue_item = Fabricate(:queue_item, user_id: current_user.id, list_order: 1)
+          Fabricate(:queue_item, user_id: current_user.id, list_order: 2)
           delete :destroy, id: queue_item.id
         end
 
         it 'deletes the selected queue item from the database' do
-          expect(QueueItem.count).to eq(0)
+          expect(QueueItem.count).to eq(1)
+        end
+
+        it 'normalizes the queue item position numbers of the remaining queue items' do
+          expect(QueueItem.first.list_order).to eq(1)
         end
 
         it 'flashes a warning alert' do
