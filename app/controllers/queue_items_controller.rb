@@ -22,7 +22,7 @@ class QueueItemsController < ApplicationController
   def update_queue
     begin
       update_queue_items
-      normalize_list_order
+      current_user.normalize_list_order
     rescue ActiveRecord::RecordInvalid
       flash[:error] = 'You entered an invalid list order.'
     end
@@ -33,7 +33,7 @@ class QueueItemsController < ApplicationController
     @queue_item = QueueItem.find(params[:id])
     @video = @queue_item.video
     @queue_item.destroy if current_user.queue_items.include?(@queue_item)
-    normalize_list_order
+    current_user.normalize_list_order
     flash[:warning] = "You removed #{@video.title} from your queue."
     redirect_to my_queue_path
   end
@@ -62,12 +62,6 @@ private
         queue_item = QueueItem.find(array_item['id'])
         queue_item.update_attributes!(list_order: array_item['list_order']) if queue_item.user == current_user
       end
-    end
-  end
-
-  def normalize_list_order
-    current_user.queue_items.each_with_index do |queue_item, index|
-      queue_item.update_attributes(list_order: index + 1)
     end
   end
 end
