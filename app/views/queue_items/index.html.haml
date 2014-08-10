@@ -25,11 +25,11 @@
                   %td
                     = button_to 'Play', nil, class: 'btn btn-default'
                   %td
-                    = queue_item.rating
+                    = select_tag 'queue_items[][rating]', options_for_rating_select(queue_item.rating), include_blank: true
                   %td
                     - queue_item.categories.each do |category|
                       = link_to category.name, category_path(category)
                   %td
                     = link_to queue_item_path(queue_item), method: :delete do
-                      %i.glyphicon.glyphicon-remove
+                      %span.glyphicon.glyphicon-remove
           = submit_tag 'Update Instant Queue', class: 'btn btn-default'
