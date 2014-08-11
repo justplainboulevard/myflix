@@ -5,11 +5,12 @@ RSpec.describe QueueItem, type: :model do
 
   describe '#video_title' do
 
-    let(:video) { Fabricate(:video, title: 'This Is the Title') }
-    let(:user) { Fabricate(:user) }
-    let(:queue_item) { Fabricate(:queue_item, user_id: user.id, video_id: video.id) }
+    set_user
+    set_video
+    set_queue_item
 
     it 'returns the title of the associated video' do
+      video.update_attributes(title: 'This Is the Title')
       expect(queue_item.video_title).to eq('This Is the Title')
     end
   end

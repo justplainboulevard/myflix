@@ -3,14 +3,12 @@ require 'rails_helper'
 
 RSpec.describe PagesController, type: :controller do
 
-  let(:current_user) { Fabricate(:user) }
-
   describe 'GET #front' do
 
     context 'with an authenicated user' do
 
       before :each do
-        session[:user_id] = current_user.id
+        set_current_user
         get :front
       end
 

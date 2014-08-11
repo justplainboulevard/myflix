@@ -14,42 +14,35 @@ RSpec.describe Category, type: :model do
 
   describe '#recent_videos' do
 
-    let(:category) { Fabricate(:category) }
+    set_category
 
     it 'returns an empty array if there are no videos in the category' do
-
       expect(category.most_recent).to eq([])
     end
 
     it 'returns an array of all videos in the category if there are six or fewer' do
-
       videos = Fabricate.times(4, :video)
       videos.each do |video|
         Fabricate(:video_category, category_id: category.id, video_id: video.id)
       end
-
       expect(category.most_recent.size).to eq(videos.size)
     end
 
     it 'returns an array of only six videos if there are more than six videos in the category' do
-
       videos = Fabricate.times(7, :video)
       videos.each do |video|
         Fabricate(:video_category, category_id: category.id, video_id: video.id)
       end
-
       expect(category.most_recent.size).to eq(6)
     end
 
     it 'returns an array ordered by created_at in reverse chronological order if two or more videos in the category' do
-
       old_video = Fabricate(:video, created_at: 1.day.ago)
       new_video = Fabricate(:video)
       videos = [old_video, new_video]
       videos.each do |video|
         Fabricate(:video_category, category_id: category.id, video_id: video.id)
       end
-
       expect(category.most_recent).to eq([new_video, old_video])
     end
   end

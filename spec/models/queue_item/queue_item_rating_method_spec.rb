@@ -5,9 +5,9 @@ RSpec.describe QueueItem, type: :model do
 
   describe '#rating' do
 
-    let(:video) { Fabricate(:video) }
-    let(:user) { Fabricate(:user) }
-    let(:queue_item) { Fabricate(:queue_item, user_id: user.id, video_id: video.id) }
+    set_user
+    set_video
+    set_queue_item
 
     context 'where the user has reviewed and rated the video' do
 

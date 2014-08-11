@@ -3,11 +3,16 @@ require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
 
-  let(:category) { Fabricate(:category) }
-
   describe 'GET #show' do
 
+    set_category
+
+    it_behaves_like 'requires user' do
+      let(:action) { get :show, id: category.id }
+    end
+
     before :each do
+      set_current_user
       get :show, id: category.id
     end
 

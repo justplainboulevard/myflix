@@ -3,34 +3,25 @@ require 'rails_helper'
 
 RSpec.describe VideosController, type: :controller do
 
-  let(:current_user) { Fabricate(:user) }
-
   describe 'GET #show' do
 
-    let(:video) { Fabricate(:video) }
-    let(:reviews_list) { Fabricate.times(2, :review, video_id: video.id) }
-
-    context 'with an authenicated user' do
-
-      before { session[:user_id] = current_user.id }
-      before { get :show, id: video.id }
-
-      it 'sets the @video instance variable' do
-        expect(assigns(:video)).to eq(video)
-      end
-
-      it 'sets the @reviews instance variable' do
-        expect(assigns(:reviews)).to match_array(reviews_list)
-      end
+    it_behaves_like 'requires user' do
+      let(:action) { get :show, id: video.id }
     end
 
-    context 'with an unauthenicated user' do
+    set_video
 
-      before { get :show, id: video.id }
+    before :each do
+      set_current_user
+      get :show, id: video.id
+    end
 
-      it 'redirects the user to the root path' do
-        expect(response).to redirect_to root_path
-      end
+    it 'sets the @video instance variable' do
+      expect(assigns(:video)).to eq(video)
+    end
+
+    it 'sets the @reviews instance variable' do
+      expect(assigns(:reviews)).to match_array(video.reviews)
     end
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe QueueItem, type: :model do
   # describe '#category_names' do
 
   #   let(:video) { Fabricate(:video) }
-  #   let(:user) { Fabricate(:user) }
+  #   set_user
 
   #   it 'it returns an array of the category names for the video' do
 

@@ -5,7 +5,7 @@ RSpec.describe SessionsController, type: :controller do
 
   describe 'POST #create' do
 
-    let(:user) { Fabricate(:user) }
+    set_user
 
     context 'with valid credentials' do
 
