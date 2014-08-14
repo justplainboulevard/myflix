@@ -17,21 +17,22 @@ group :development do
   gem 'annotate', '~> 2.6.5'
   gem 'better_errors', '~> 1.1.0'
   gem 'binding_of_caller'
-  gem 'guard-rspec', require: false
-  gem 'pry'
-  gem 'pry-doc', '~> 0.6.0'
   gem 'thin', '~> 1.6.2'
 end
 
 group :development, :test do
-  gem 'capybara', '~> 2.4.1'
   gem 'fabrication', '~> 2.11.3'
   gem 'faker', '~> 1.4.2'
+  gem 'guard-rspec', require: false
+  gem 'pry'
+  gem 'pry-doc', '~> 0.6.0'
   gem 'rspec-rails', '~> 3.0.1'
 end
 
 group :test do
+  gem 'capybara', '~> 2.4.1'
   gem 'database_cleaner', '1.2.0'
+  gem 'launchy'
   gem 'shoulda-matchers', require: false
 end
 

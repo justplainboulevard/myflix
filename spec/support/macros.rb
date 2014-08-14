@@ -36,3 +36,7 @@ end
 def set_categories
   let(:categories) { Fabricate.times(3, :category) }
 end
+
+def set_video_category(video, category)
+  Fabricate(:video_category, video_id: video.id, category_id: category.id)
+end

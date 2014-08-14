@@ -25,4 +25,8 @@ class User < ActiveRecord::Base
       queue_item.update_attributes(list_order: index + 1)
     end
   end
+
+  def queued_video?(video)
+    queue_items.map(&:video).include?(video)
+  end
 end
