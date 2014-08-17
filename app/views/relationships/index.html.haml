@@ -1,14 +1,16 @@
 
 %section.people
   %header
-    %h2 People I Follow
+    %h2
+      = "People I Follow (#{current_user.follower_relationships.count})"
   %table.table
     %thead
       %tr
-        %th(width="30%")
-        %th(width="20%") Videos in Queue
-        %th(width="20%") Followers
-        %th(width="30%") Unfollow
+        %th(width="40%")
+        %th(width="15%") Videos in Queue
+        %th(width="15%") Followed by
+        %th(width="15%") Follows
+        %th(width="15%") Unfollow
     %tbody
       - @relationships.each do |relationship|
         %tr
@@ -19,7 +21,9 @@
           %td.extra-padding
             = relationship.leader.queue_items.count
           %td.extra-padding
-            = # relationship.leader.leader_relationships.count
+            = relationship.leader.leader_relationships.count
           %td.extra-padding
-            = link_to relationships_path, method: :delete do
+            = relationship.leader.follower_relationships.count
+          %td.extra-padding
+            = link_to relationship_path(relationship), method: :delete do
               %i.glyphicon.glyphicon-remove

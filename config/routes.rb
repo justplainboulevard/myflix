@@ -11,8 +11,10 @@ Rails.application.routes.draw do
   post 'signin', to: 'sessions#create'
   get 'signout', to: 'sessions#destroy'
 
+  get 'people', to: 'relationships#index'
+
   resources :users, except: [:new, :index]
-  resources :relationships, only: [:index]
+  resources :relationships, only: [:destroy]
   resources :categories
   resources :videos, except: [:index] do
     collection do

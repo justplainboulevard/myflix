@@ -1,5 +1,5 @@
 
 Fabricator(:relationship) do
-  leader_id {  }
-  follower_id {  }
+  leader_id { Fabricate(:user).id }
+  follower_id { Fabricate(:user).id }
 end
