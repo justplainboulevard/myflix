@@ -249,3 +249,12 @@ User.all.each do |user|
     Fabricate(:queue_item, user_id: user.id, video_id: (1..30).to_a.sample, list_order: Fabricate.sequence(1))
   end
 end
+
+User.all.each do |leader|
+
+  User.all.each do |follower|
+
+    Fabricate(:relationship, leader_id: leader.id, follower_id: follower.id) unless leader.id == follower.id
+  end
+end
+

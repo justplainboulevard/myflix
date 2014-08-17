@@ -1,0 +1,29 @@
+
+%section.people
+  %header
+    %h2
+      = "People I Follow (#{current_user.follower_relationships.count})"
+  %table.table
+    %thead
+      %tr
+        %th(width="40%")
+        %th(width="15%") Videos in Queue
+        %th(width="15%") Followed by
+        %th(width="15%") Follows
+        %th(width="15%") Unfollow
+    %tbody
+      - @relationships.each do |relationship|
+        %tr
+          %td
+            %img
+              = gravatar_for(relationship.leader)
+            = link_to relationship.leader.full_name, user_path(relationship.leader)
+          %td.extra-padding
+            = relationship.leader.queue_items.count
+          %td.extra-padding
+            = relationship.leader.leader_relationships.count
+          %td.extra-padding
+            = relationship.leader.follower_relationships.count
+          %td.extra-padding
+            = link_to relationship_path(relationship), method: :delete do
+              %i.glyphicon.glyphicon-remove
