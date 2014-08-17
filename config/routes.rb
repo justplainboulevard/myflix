@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'signout', to: 'sessions#destroy'
 
   resources :users, except: [:new, :index]
+  resources :relationships, only: [:index]
   resources :categories
   resources :videos, except: [:index] do
     collection do
