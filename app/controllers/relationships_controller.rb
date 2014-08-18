@@ -9,13 +9,13 @@ class RelationshipsController < ApplicationController
 
   def create
     leader = User.find(params[:leader_id])
-    if current_user.followed_user?(leader)
-      flash[:success] = "You already follow #{leader.full_name}!"
+    if current_user.can_follow?(leader)
+      relationship = Relationship.create(leader_id: params[:leader_id], follower_id: current_user.id)
+      flash[:success] = "You are now following #{relationship.leader.full_name}!"
     elsif current_user == leader
       flash[:success] = "You cannot follow yourself!"
     else
-      relationship = Relationship.create(leader_id: params[:leader_id], follower_id: current_user.id)
-      flash[:success] = "You are now following #{relationship.leader.full_name}!"
+      flash[:success] = "You already follow #{leader.full_name}!"
     end
     redirect_to people_path
   end

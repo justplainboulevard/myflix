@@ -40,7 +40,15 @@ class User < ActiveRecord::Base
     (total / reviews.count).round(1)
   end
 
-  def followed_user?(another_user)
-    follower_relationships.map(&:leader_id).include?(another_user.id)
+  # def can_follow?(another_user)
+  #   if self == another_user || self.follower_relationships.map(&:leader_id).include?(another_user.id)
+  #     return false
+  #   else
+  #     return true
+  #   end
+  # end
+
+  def can_follow?(another_user)
+    !(self == another_user || self.follower_relationships.map(&:leader_id).include?(another_user.id))
   end
 end

@@ -7,8 +7,7 @@
             = gravatar_for(@user)
           %h2
             = @user.full_name + ' has ' + pluralize(@user.queue_items.count, 'video') + ' queued'
-          - if !current_user.followed_user?(@user)
-            = link_to 'Follow', relationships_path(leader_id: @user.id), method: :post, class: 'btn btn-default' unless @user == current_user
+          = link_to 'Follow', relationships_path(leader_id: @user.id), method: :post, class: 'btn btn-default' if current_user.can_follow?(@user)
         %table.table
           %thead
             %tr
