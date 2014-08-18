@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get 'people', to: 'relationships#index'
 
   resources :users, except: [:new, :index]
-  resources :relationships, only: [:destroy]
+  resources :relationships, only: [:create, :destroy]
   resources :categories
   resources :videos, except: [:index] do
     collection do

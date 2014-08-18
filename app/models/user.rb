@@ -39,4 +39,8 @@ class User < ActiveRecord::Base
     end
     (total / reviews.count).round(1)
   end
+
+  def followed_user?(another_user)
+    follower_relationships.map(&:leader_id).include?(another_user.id)
+  end
 end
