@@ -15,4 +15,5 @@
 /log/*.log
 /tmp
 
-exportr.yml
+# Ignore application configuration
+/config/application.yml
