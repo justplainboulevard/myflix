@@ -1,0 +1,14 @@
+
+!!! 5
+%html(lang="en-US")
+  %body
+    %section.container
+      .row
+        .col-sm-10.col-sm-offset-1
+          %article
+            %header
+              %h2= "Welcome to MyFlix, #{@user.full_name}!"
+              %p Thanks for subscribing to the best video streaming service in the Universe!
+              %p.sign_in
+                = link_to signin_url do
+                  = 'Please sign in to begin viewing awesome videos.'
