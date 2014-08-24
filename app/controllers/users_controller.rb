@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      UserMailer.welcome_email(@user).deliver
       session[:user_id] = @user.id
       flash[:success] = "You are now registered as #{@user.full_name}. Welcome to MyFlix!"
       redirect_to signin_path
