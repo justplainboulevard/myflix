@@ -7,9 +7,9 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with valid attributes' do
 
-      before :each do
-        post :create, user: Fabricate.attributes_for(:user)
-      end
+      before { post :create, user: Fabricate.attributes_for(:user) }
+
+      after { ActionMailer::Base.deliveries.clear }
 
       it 'sets the @user instance variable' do
         expect(assigns(:user)).to be_instance_of(User)
@@ -26,13 +26,27 @@ RSpec.describe UsersController, type: :controller do
       it 'responds with an HTTP 302 status code' do
         expect(response).to have_http_status(302)
       end
+
+      it 'sends an email' do
+        expect(ActionMailer::Base.deliveries).to_not be_empty
+      end
+
+      it 'sends an email to the correct recipient' do
+        message = ActionMailer::Base.deliveries.last
+        expect(message.to).to eq([User.first.email_address])
+      end
+
+      it 'sends an email with the correct content' do
+        message = ActionMailer::Base.deliveries.last
+        expect(message.body).to include("Welcome to MyFlix, #{User.first.full_name}!")
+      end
     end
 
     context 'with invalid attributes' do
 
-      before :each do
-        post :create, user: Fabricate.attributes_for(:user, email_address: '')
-      end
+      before { post :create, user: Fabricate.attributes_for(:user, email_address: '') }
+
+      after { ActionMailer::Base.deliveries.clear }
 
       it 'sets the @user instance variable' do
         expect(assigns(:user)).to be_instance_of(User)
@@ -52,6 +66,10 @@ RSpec.describe UsersController, type: :controller do
 
       it 'responds with an HTTP 200 status code' do
         expect(response).to have_http_status(200)
+      end
+
+      it 'does not send an email' do
+        expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
   end
