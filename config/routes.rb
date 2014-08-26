@@ -25,5 +25,9 @@ Rails.application.routes.draw do
   resources :queue_items, only: [:create, :destroy]
   post 'update_queue', to: 'queue_items#update_queue'
 
+  get 'forgot_password', to: 'password_reset#new'
+  resources :password_reset, only: [:create]
+  get 'password_reset_confirmation', to: 'password_reset#confirm'
+
   get 'ui(/:action)', controller: 'ui'
 end
