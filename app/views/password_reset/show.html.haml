@@ -7,6 +7,6 @@
           %header
             %h1 Reset Your Password
           = f.text_field :password, label: 'New Password'
-          = f.hidden_field :token, @token
+          = f.hidden_field :token, value: @token
           = f.form_group do
             = f.submit 'Reset Password', class: 'btn btn-default'

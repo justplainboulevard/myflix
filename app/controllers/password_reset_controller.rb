@@ -33,6 +33,16 @@ class PasswordResetController < ApplicationController
   end
 
   def reset_password
-    redirect_to signin_path
+    @user = User.where(token: params[:token]).first
+
+    if @user
+      @user.password = params[:password]
+      @user.generate_token
+      @user.save
+      flash[:success] = 'You successfully reset your password. Please sign in using your new password.'
+      redirect_to signin_path
+    else
+      redirect_to expired_token_path
+    end
   end
 end

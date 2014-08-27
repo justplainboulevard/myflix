@@ -7,17 +7,19 @@ RSpec.describe PasswordResetController, type: :controller do
 
     context 'where the reset password token is valid' do
 
+      let(:user) { Fabricate(:user, password: 'old_password') }
+
       before :each do
-        user = Fabricate(:user, password: 'old_password')
         user.update_column(:token, 'abcde')
-        post :reset_password, token: 'abcde', password: 'new_password'
+        post :reset_password, id: 'abcde', token: 'abcde', password: 'new_password'
       end
 
       it 'updates the user\'s password' do
-        expect(user.reload.authenticate('new_password')).to be_true
+        expect(user.reload.authenticate('new_password')).to eq(user)
       end
 
       it 'regenerates the user\'s token' do
+        expect(user.reload.token).not_to eq('abcde')
       end
 
       it 'redirects to the sign in page' do
@@ -25,16 +27,14 @@ RSpec.describe PasswordResetController, type: :controller do
       end
 
       it 'flashes a success message' do
-        expect(flash[:sucess]).to eq('')
+        expect(flash[:success]).to be_present
       end
     end
 
     context 'where the reset password token is invalid' do
 
       before :each do
-        user = Fabricate(:user)
-        user.update_column(:token, 'abcde')
-        get :show, id: 'fghij'
+        post :reset_password, id: 'fghij', password: 'new_password'
       end
 
       it 'redirects to the expired token page' do

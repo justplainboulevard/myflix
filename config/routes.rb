@@ -26,10 +26,10 @@ Rails.application.routes.draw do
   post 'update_queue', to: 'queue_items#update_queue'
 
   get 'forgot_password', to: 'password_reset#new'
+  post 'password_reset/:id', to: 'password_reset#reset_password'
   resources :password_reset, only: [:create, :show]
   get 'password_reset_confirmation', to: 'password_reset#confirm'
   get 'expired_token', to: 'password_reset#expired_token'
-  post 'password_reset/:id', to: 'password_reset#reset_password'
 
   get 'ui(/:action)', controller: 'ui'
 end

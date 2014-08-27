@@ -54,8 +54,6 @@ class User < ActiveRecord::Base
     !(self == another_user || self.follower_relationships.map(&:leader_id).include?(another_user.id))
   end
 
-private
-
   def generate_token
     self.token = SecureRandom.urlsafe_base64
   end
