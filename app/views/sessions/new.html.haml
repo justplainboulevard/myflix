@@ -3,10 +3,11 @@
   .row
     .col-sm-10.col-sm-offset-1
       %fieldset
-        %header
-          %h1 Sign in
-        = bootstrap_form_tag url: 'signin', layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-6' do |f|
+        = bootstrap_form_tag url: 'signin', layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-6', class: 'sign_in' do |f|
+          %header
+            %h1 Sign in
           = f.email_field :email_address, value: params[:email_address] || ''
           = f.password_field :password, value: params[:password] || ''
           = f.form_group do
-            = f.submit 'Sign In'
+            = f.submit 'Sign In', class: 'btn btn-default'
+            = link_to 'Forgot password?', forgot_password_path, class: 'pull-right'
