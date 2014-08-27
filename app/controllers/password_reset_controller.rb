@@ -17,6 +17,22 @@ class PasswordResetController < ApplicationController
   end
 
   def confirm
+  end
 
+  def show
+    @user = User.where(token: params[:id]).first
+
+    if @user
+      @token = @user.token
+    else
+      redirect_to expired_token_path
+    end
+  end
+
+  def expired_token
+  end
+
+  def reset_password
+    redirect_to signin_path
   end
 end

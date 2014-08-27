@@ -3,12 +3,12 @@ require 'rails_helper'
 
 RSpec.describe PasswordResetController, type: :controller do
 
-  describe 'GET #new' do
+  describe 'GET #confirm' do
 
-    before { get :new }
+    before { get :confirm }
 
-    it 'renders the password_reset/new template' do
-      expect(response).to render_template :new
+    it 'renders the password_reset/confirm template' do
+      expect(response).to render_template :confirm
     end
 
     it 'responds successfully' do

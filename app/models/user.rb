@@ -12,6 +12,8 @@
 
 class User < ActiveRecord::Base
 
+  before_create :generate_token
+
   has_secure_password validations: false
 
   has_many :queue_items, -> { order('list_order') }
@@ -50,5 +52,11 @@ class User < ActiveRecord::Base
 
   def can_follow?(another_user)
     !(self == another_user || self.follower_relationships.map(&:leader_id).include?(another_user.id))
+  end
+
+private
+
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64
   end
 end
