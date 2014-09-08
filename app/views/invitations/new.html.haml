@@ -7,8 +7,8 @@
           %header
             %h1 Invite a friend to join MyFlix!
             %br
-          = f.text_field :friend_name, label: 'Friend\'s Name'
-          = f.text_field :friend_email_address, label: 'Friend\'s Email Address'
+          = f.text_field :invitee_name, label: 'Friend\'s Name'
+          = f.text_field :invitee_email_address, label: 'Friend\'s Email Address'
           = f.text_area :invitation_message, rows: 6, placeholder: 'Please join this really cool site!', label: 'Invitation Message'
           = f.form_group do
             = f.submit 'Send Invitation', class: 'btn btn-default'
