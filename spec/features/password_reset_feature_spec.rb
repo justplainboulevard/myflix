@@ -55,4 +55,14 @@ feature 'password reset' do
     expect(current_path).to eq(password_reset_path(@user.token))
     expect(page).to have_content 'Reset Your Password'
   end
+
+  scenario 'view email body in browser' do
+
+    fill_in 'Email Address', with: 'user@example.com'
+    click_button 'Send Email'
+    open_email('user@example.com')
+    current_email.click_link 'Reset my password.'
+
+    current_email.save_and_open
+  end
 end

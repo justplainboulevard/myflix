@@ -31,5 +31,7 @@ Rails.application.routes.draw do
   get 'password_reset_confirmation', to: 'password_reset#confirm'
   get 'expired_token', to: 'password_reset#expired_token'
 
+  resources :invitations, only: [:new, :create]
+
   get 'ui(/:action)', controller: 'ui'
 end
