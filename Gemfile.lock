@@ -48,6 +48,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-email (2.4.0)
+      capybara (~> 2.4)
+      mail
     celluloid (0.15.2)
       timers (~> 1.1.0)
     coderay (1.1.0)
@@ -219,6 +222,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.2.0.0)
   bootstrap_form (~> 2.1.1)
   capybara (~> 2.4.1)
+  capybara-email (~> 2.4.0)
   coffee-rails (~> 4.0.1)
   database_cleaner (= 1.2.0)
   fabrication (~> 2.11.3)
