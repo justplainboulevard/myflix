@@ -1,0 +1,14 @@
+
+!!! 5
+%html(lang="en-US")
+  %body
+    %section.container
+      .row
+        .col-sm-10.col-sm-offset-1
+          %article
+            %header
+              %h2= "#{@invitation.invitee_name}, #{@invitation.inviter.full_name} has sent you this message from MyFlix: #{@invitation.invitation_message}."
+              %p Click the link below to:
+              %p.register
+                = link_to register_with_token_url(@invitation.token) do
+                  = 'Go to MyFlix!'

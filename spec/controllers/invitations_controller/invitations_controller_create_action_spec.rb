@@ -5,48 +5,65 @@ RSpec.describe InvitationsController, type: :controller do
 
   describe 'POST #create' do
 
-    # context 'where the user does not submit a friend\'s email address' do
+    it_behaves_like 'requires user' do
+      let(:action) { post :create }
+    end
 
-    #   before { post :create, friend_email_address: '' }
-
-    #   it 'redirects to the forgot password page' do
-    #     expect(response).to redirect_to new_invitation_path
-    #   end
-
-    #   it 'flashes an error message' do
-    #     expect(flash[:danger]).to eq('Email address cannot be blank.')
-    #   end
-    # end
-
-    # context 'where the user submits an invalid email address' do
-
-    #   before :each do
-    #     # SET INVALID PASSWORD
-    #     post :create, friend_email_address: 'jsmith$example.com'
-    #   end
-
-    #   it 'redirects to the forgot password page' do
-    #     expect(response).to redirect_to new_invitation_path
-    #   end
-
-    #   it 'flashes an error message' do
-    #     expect(flash[:danger]).to eq('You submitted an invalid email address.')
-    #   end
-    # end
-
-    context 'where the user submits a valid email address' do
+    context 'where the user does not submit valid data' do
 
       before :each do
-        # SET VALID PASSWORD
-        post :create, friend_name: 'John Doe', friend_email_address: 'jdoe@example.com'
+        set_current_user
+        post :create, invitation: { invitee_name: 'John Doe', invitee_email_address: '', invitation_message: 'Join MyFlix' }
       end
 
-      it 'redirects to the invitation confirmation page' do
-        expect(response).to redirect_to invitation_confirmation_path
+      it 'sets the @invitation instance variable' do
+        expect(assigns(:invitation)).to be_present
+      end
+
+      it 'renders the invitations/new template' do
+        expect(response).to render_template :new
+      end
+
+      it 'flashes an error message' do
+        expect(flash[:danger]).to be_present
+      end
+
+      it 'does not create a new invitation' do
+        expect(Invitation.count).to eq(0)
+      end
+
+      it 'does not send an email' do
+        expect(ActionMailer::Base.deliveries).to be_empty
+      end
+    end
+
+    context 'where the user submits valid data' do
+
+      before :each do
+        set_current_user
+        post :create, invitation: { invitee_name: 'John Doe', invitee_email_address: 'jdoe@example.com', invitation_message: 'Join MyFlix' }
+      end
+
+      after { ActionMailer::Base.deliveries.clear }
+
+      it 'sets the @invitation instance variable' do
+        expect(assigns(:invitation)).to be_present
+      end
+
+      it 'creates a new invitation' do
+        expect(Invitation.count).to eq(1)
       end
 
       it 'sends an email to the user\'s friend\'s email address' do
         expect(ActionMailer::Base.deliveries.last.to).to eq(['jdoe@example.com'])
+      end
+
+      it 'redirects to the new invitation page' do
+        expect(response).to redirect_to new_invitation_path
+      end
+
+      it 'flashes a success message' do
+        expect(flash[:success]).to be_present
       end
     end
   end
