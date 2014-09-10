@@ -11,6 +11,12 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def new_with_invitation_token
+    @invitation = Invitation.where(token: params[:token]).first
+    @user = User.new(email_address: @invitation.invitee_email_address)
+    render :new
+  end
+
   def create
     @user = User.new(user_params)
 
