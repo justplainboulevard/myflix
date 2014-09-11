@@ -236,25 +236,25 @@ VideoCategory.create([
   { video_id: 30, category_id: 19 }
 ])
 
-Fabricate.times(25, :user)
+# Fabricate.times(25, :user)
 
-User.all.each do |user|
+# User.all.each do |user|
 
-  Video.all.each do |video|
+#   Video.all.each do |video|
 
-    Fabricate(:review, user_id: user.id, video_id: video.id)
-  end
+#     Fabricate(:review, user_id: user.id, video_id: video.id)
+#   end
 
-  3.times do
-    Fabricate(:queue_item, user_id: user.id, video_id: (1..30).to_a.sample, list_order: Fabricate.sequence(1))
-  end
-end
+#   3.times do
+#     Fabricate(:queue_item, user_id: user.id, video_id: (1..30).to_a.sample, list_order: Fabricate.sequence(1))
+#   end
+# end
 
-User.all.each do |leader|
+# User.all.each do |leader|
 
-  User.all.each do |follower|
+#   User.all.each do |follower|
 
-    Fabricate(:relationship, leader_id: leader.id, follower_id: follower.id) unless leader.id == follower.id
-  end
-end
+#     Fabricate(:relationship, leader_id: leader.id, follower_id: follower.id) unless leader.id == follower.id
+#   end
+# end
 
