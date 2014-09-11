@@ -10,6 +10,8 @@ feature 'password reset' do
     visit forgot_password_path
   end
 
+  after { ActionMailer::Base.deliveries.clear }
+
   scenario 'request password reset with valid email address' do
 
     fill_in 'Email Address', with: 'user@example.com'

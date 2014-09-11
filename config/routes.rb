@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'my_queue', to: 'queue_items#index'
 
   get 'register', to: 'users#new'
+  get 'register/:token', to: 'users#new_with_invitation_token', as: 'register_with_token'
   get 'signin', to: 'sessions#new'
   post 'signin', to: 'sessions#create'
   get 'signout', to: 'sessions#destroy'
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
   post 'password_reset/:id', to: 'password_reset#reset_password'
   resources :password_reset, only: [:create, :show]
   get 'password_reset_confirmation', to: 'password_reset#confirm'
-  get 'expired_token', to: 'password_reset#expired_token'
+  get 'expired_token', to: 'pages#expired_token'
 
   resources :invitations, only: [:new, :create]
 

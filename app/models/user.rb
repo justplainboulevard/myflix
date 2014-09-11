@@ -8,6 +8,7 @@
 #  full_name       :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  token           :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -52,6 +53,14 @@ class User < ActiveRecord::Base
 
   def can_follow?(another_user)
     !(self == another_user || self.follower_relationships.map(&:leader_id).include?(another_user.id))
+  end
+
+  def follows?(another_user)
+    follower_relationships.map(&:leader_id).include?(another_user.id)
+  end
+
+  def follow(another_user)
+    follower_relationships.create(leader_id: another_user.id) if can_follow?(another_user)
   end
 
   def generate_token

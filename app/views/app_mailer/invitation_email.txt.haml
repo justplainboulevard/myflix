@@ -1,0 +1,7 @@
+
+= "#{@invitation.invitee_name}, #{@invitation.inviter.full_name} has sent you this message from MyFlix: #{@invitation.invitation_message}."
+
+Click the link below to:
+
+- link_to register_with_token_url(@invitation.token) do
+  = 'Go to MyFlix!'

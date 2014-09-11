@@ -42,6 +42,30 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
+    context 'by invitation with valid attributes' do
+
+      before :each do
+        @user = Fabricate(:user)
+        @invitation = Fabricate(:invitation, inviter: @user, invitee_email_address: 'jdoe@example.com')
+        post :create, user: { email_address: 'jdoe@example.com', password: 'password', full_name: 'John Doe' }, invitation_token: @invitation.token
+        @new_user = User.where(email_address: 'jdoe@example.com').first
+      end
+
+      after { ActionMailer::Base.deliveries.clear }
+
+      it 'makes the invitee follow the inviter' do
+        expect(@new_user.follows?(@user)).to eq(true)
+      end
+
+      it 'makes the inviter follow the invitee' do
+        expect(@user.follows?(@new_user)).to eq(true)
+      end
+
+      it 'expires the invitation token upon acceptance' do
+        expect(@invitation.reload.token).to eq(nil)
+      end
+    end
+
     context 'with invalid attributes' do
 
       before { post :create, user: Fabricate.attributes_for(:user, email_address: '') }
