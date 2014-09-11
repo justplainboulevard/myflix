@@ -28,4 +28,8 @@ RSpec.describe User, type: :model do
     user = Fabricate(:user)
     expect(user.token).to be_present
   end
+
+  it_behaves_like 'is tokenable' do
+    let(:object) { Fabricate(:user) }
+  end
 end

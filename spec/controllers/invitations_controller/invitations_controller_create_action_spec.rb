@@ -13,6 +13,7 @@ RSpec.describe InvitationsController, type: :controller do
 
       before :each do
         set_current_user
+        ActionMailer::Base.deliveries.clear
         post :create, invitation: { invitee_name: 'John Doe', invitee_email_address: '', invitation_message: 'Join MyFlix' }
       end
 

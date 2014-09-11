@@ -12,8 +12,7 @@
 #
 
 class User < ActiveRecord::Base
-
-  before_create :generate_token
+  include Tokenable
 
   has_secure_password validations: false
 
@@ -61,9 +60,5 @@ class User < ActiveRecord::Base
 
   def follow(another_user)
     follower_relationships.create(leader_id: another_user.id) if can_follow?(another_user)
-  end
-
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
   end
 end
