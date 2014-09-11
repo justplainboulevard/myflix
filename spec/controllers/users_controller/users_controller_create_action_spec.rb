@@ -51,6 +51,8 @@ RSpec.describe UsersController, type: :controller do
         @new_user = User.where(email_address: 'jdoe@example.com').first
       end
 
+      after { ActionMailer::Base.deliveries.clear }
+
       it 'makes the invitee follow the inviter' do
         expect(@new_user.follows?(@user)).to eq(true)
       end

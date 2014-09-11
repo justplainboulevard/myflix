@@ -9,8 +9,8 @@
 #  invitation_message    :text
 #  created_at            :datetime
 #  updated_at            :datetime
+#  token                 :string(255)
 #
-
 
 class Invitation < ActiveRecord::Base
 

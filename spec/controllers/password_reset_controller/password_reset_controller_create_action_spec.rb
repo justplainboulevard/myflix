@@ -41,6 +41,8 @@ RSpec.describe PasswordResetController, type: :controller do
         post :create, email_address: 'jdoe@example.com'
       end
 
+      after { ActionMailer::Base.deliveries.clear }
+
       it 'redirects to the password reset confirmation page' do
         expect(response).to redirect_to password_reset_confirmation_path
       end
