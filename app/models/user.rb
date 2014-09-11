@@ -55,6 +55,14 @@ class User < ActiveRecord::Base
     !(self == another_user || self.follower_relationships.map(&:leader_id).include?(another_user.id))
   end
 
+  def follows?(another_user)
+    follower_relationships.map(&:leader_id).include?(another_user.id)
+  end
+
+  def follow(another_user)
+    follower_relationships.create(leader_id: another_user.id) if can_follow?(another_user)
+  end
+
   def generate_token
     self.token = SecureRandom.urlsafe_base64
   end
