@@ -29,7 +29,7 @@ feature 'invite friend' do
     find_invitation
     follow_invitation_link
 
-    # expect(current_path).to eq("/register/#{@first_invitation.token}") # previously passed, but now gets "//register..." instead of "/register..."
+    expect(current_path).to eq("/register/#{@first_invitation.token}")
     expect(find_field('Email address').value).to eq("#{@friend.email_address}")
   end
 

@@ -54,7 +54,7 @@ feature 'password reset' do
     open_email('user@example.com')
     current_email.click_link 'Reset my password.'
 
-    # expect(current_path).to eq(password_reset_path(@user.token)) # previously passed, but now gets "//password_reset..." instead of "/password_reset..."
+    expect(current_path).to eq(password_reset_path(@user.token))
     expect(page).to have_content 'Reset Your Password'
   end
 
