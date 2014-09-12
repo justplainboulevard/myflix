@@ -12,7 +12,9 @@ module Myflix
 
     config.assets.enabled = true
 
-    config.action_mailer.default_url_options = { host: 'localhost:3000' }
+    # config.action_mailer.default_url_options = { host: 'localhost:3000' } # DEVELOPMENT
+
+    config.action_mailer.default_url_options = { host: 'http://vast-sea-1450.herokuapp.com/' } # PRODUCTION
 
     config.generators do |g|
       g.orm :active_record
