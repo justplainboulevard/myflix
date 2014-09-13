@@ -1,3 +1,4 @@
+
 Myflix::Application.configure do
   config.cache_classes = true
 
