@@ -35,11 +35,15 @@ class User < ActiveRecord::Base
   end
 
   def average_rating
-    total = 0.0
-    self.reviews.each do |review|
-      total += review[:rating]
+    if self.reviews
+      total = 0.0
+      self.reviews.each do |review|
+        total += review[:rating]
+      end
+      (total / reviews.count).round(1)
+    else
+      0.0
     end
-    (total / reviews.count).round(1)
   end
 
   # def can_follow?(another_user)
