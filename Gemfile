@@ -18,6 +18,7 @@ gem 'sentry-raven', :git => 'https://github.com/getsentry/raven-ruby.git'
 gem 'sidekiq', '~> 3.2.5'
 gem 'uglifier', '~> 2.5.3'
 gem 'unicorn', '~> 4.8.3'
+gem 'virtus', '~> 1.0.3'
 
 group :development do
   gem 'annotate', '~> 2.6.5'
