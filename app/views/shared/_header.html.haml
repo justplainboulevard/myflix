@@ -23,5 +23,5 @@
               %a(href="#") Account
               %a(href="#") Plan and Billing
               = link_to 'Sign Out', signout_path
-              -# - if admin?
-              -#   = link_to 'Admin', '#' # admin_path
+              - if current_user.admin?
+                = link_to 'Admin', new_admin_video_path

@@ -3,7 +3,7 @@
   .row
     .col-md-10.col-md-offset-1
       %fieldset
-        = bootstrap_form_for [:admin, @video], html: { layout: :horizontal, label_col: 'col-sm-3', control_col: 'col-sm-6', class: '' } do |f|
+        = bootstrap_nested_form_for [:admin, @video], layout: :horizontal, label_col: 'col-sm-3', control_col: 'col-sm-6', class: '' do |f|
           %ul.nav.nav-tabs
             %li
               %a(href="#") Recent Payments
@@ -11,9 +11,9 @@
               %a(href="") Add a New Video
           %br
           = f.text_field :title
-          = f.select :category_id, options_for_select(Category.all.map { |category| [category.name, category.id] })
           = f.text_area :description, rows: 8, class: 'span6'
-
+          = f.fields_for :video_categories, label: 'Categories' do |vcf|
+            = vcf.select :category_id, options_for_select(Category.all.map { |category| [category.name, category.id] })
           .form-group
             %label.control-label.col-sm-3 Large Cover
             .col-sm-6
@@ -24,7 +24,6 @@
             .col-sm-6
               %col.btn.btn-file
                 %input.form-control(type="file")
-
           %fieldset
             = f.form_group do
               = f.submit 'Add Video', class: 'btn btn-default'

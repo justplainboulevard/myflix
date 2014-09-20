@@ -18,7 +18,7 @@ class Video < ActiveRecord::Base
   has_many :reviews, -> { order('created_at DESC') }
   has_many :queue_items
 
-  # accepts_nested_attributes_for :video_categories
+  accepts_nested_attributes_for :video_categories
 
   validates_presence_of :title, :description
   validates :title, length: { maximum: 150 }
