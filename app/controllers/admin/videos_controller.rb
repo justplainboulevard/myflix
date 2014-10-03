@@ -9,11 +9,9 @@ class Admin::VideosController < ApplicationController
   end
 
   def create
-    # binding.pry
     @video = Video.new(video_params)
-    # @video_categories = @video.video_categories.build(video_params[:category_ids][:category_ids].map{|cat| {category_id: cat}})
 
-    if @video.save # && @video_categories.save
+    if @video.save
       flash[:success] = "You successfully added the video #{@video.title}!"
       redirect_to new_admin_video_path
     else
