@@ -4,16 +4,20 @@ class SmallCoverUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
 
-  storage :fog
+  # storage :fog
 
-  def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-  end
+  # def store_dir
+  #   "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  # end
 
   process resize_to_fit: [300, 450]
 
-  version :thumb do
+  version :display do
     process resize_to_fit: [150, 225]
+  end
+
+  version :thumb do
+    process resize_to_fit: [30, 45]
   end
   #
   # def scale(width, height)

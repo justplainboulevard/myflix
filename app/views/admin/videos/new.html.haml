@@ -14,8 +14,10 @@
           = f.text_area :description, rows: 8, class: 'span6'
 
           = f.fields_for :category_ids do |vcf|
-            -# = vcf.select :category_id, options_for_select(Category.all.map { |category| [category.name, category.id] })
             = vcf.collection_check_boxes :category_ids, Category.all, :id, :name, label: 'Categories'
+
+          -# = f.fields_for :video_categories do |vcf|
+          -#   = vcf.collection_check_boxes :category_ids, Category.all, :id, :name, label: 'Categories'
 
           = image_tag(@video.small_cover_url) if @video.small_cover?
           = f.file_field :small_cover
