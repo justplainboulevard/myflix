@@ -9,6 +9,10 @@ RSpec.describe Admin::VideosController, type: :controller do
       let(:action) { get :new }
     end
 
+    it_behaves_like 'requires admin' do
+      let(:action) { get :new }
+    end
+
     context 'with an admin user' do
 
       before :each do
@@ -34,22 +38,6 @@ RSpec.describe Admin::VideosController, type: :controller do
 
       it 'responds with an HTTP 200 status code' do
         expect(response).to have_http_status(200)
-      end
-    end
-
-    context 'with a non-admin user' do
-
-      before :each do
-        set_current_user
-        get :new
-      end
-
-      it 'redirects the user to the home path' do
-        expect(response).to redirect_to home_path
-      end
-
-      it 'flashes a danger alert' do
-        expect(flash[:danger]).to be_present
       end
     end
   end
