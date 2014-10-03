@@ -13,11 +13,9 @@
           = f.text_field :title
           = f.text_area :description, rows: 8, class: 'span6'
 
-          = f.fields_for :category_ids do |vcf|
-            = vcf.collection_check_boxes :category_ids, Category.all, :id, :name, label: 'Categories'
+          -# = f.collection_check_boxes :category_ids, Category.all, :id, :name, label: 'Categories' # As per A. Agram suggestion. This works.
 
-          -# = f.fields_for :video_categories do |vcf|
-          -#   = vcf.collection_check_boxes :video_category, :category_ids, Category.all, :id, :name, label: 'Categories'
+          = f.select :category_ids, Category.all.map {|category| [category.name, category.id]}, {}, multiple: true, label: 'Categories' # As per A. Agram suggestion. This works.
 
           = image_tag(@video.small_cover_url) if @video.small_cover?
           = f.file_field :small_cover
