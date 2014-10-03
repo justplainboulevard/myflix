@@ -17,7 +17,7 @@
             = vcf.collection_check_boxes :category_ids, Category.all, :id, :name, label: 'Categories'
 
           -# = f.fields_for :video_categories do |vcf|
-          -#   = vcf.collection_check_boxes :category_ids, Category.all, :id, :name, label: 'Categories'
+          -#   = vcf.collection_check_boxes :video_category, :category_ids, Category.all, :id, :name, label: 'Categories'
 
           = image_tag(@video.small_cover_url) if @video.small_cover?
           = f.file_field :small_cover
