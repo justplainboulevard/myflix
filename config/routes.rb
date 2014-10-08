@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :videos, only: [:new, :create]
   end
 
+  resources :payments, only: [:new, :create]
   resources :users, except: [:new, :index]
   resources :relationships, only: [:create, :destroy]
   resources :categories
