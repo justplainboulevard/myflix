@@ -28,6 +28,7 @@ class UsersController < ApplicationController
 
     if @user.save
       handle_invitation
+      charge_card
       UserMailer.delay.welcome_email(@user)
       session[:user_id] = @user.id
       flash[:success] = "You are now registered as #{@user.full_name}. Welcome to MyFlix!"
@@ -54,5 +55,14 @@ private
       invitation.inviter.follow(@user)
       invitation.update_column(:token, nil)
     end
+  end
+
+  def charge_card
+    token = params[:stripeToken]
+    charge = StripeWrapper::Charge.create(
+        amount: 999,
+        card: token,
+        description: "MyFlix subscription charge for #{@user.email_address}"
+      )
   end
 end

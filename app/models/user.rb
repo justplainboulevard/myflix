@@ -9,6 +9,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  token           :string(255)
+#  admin           :boolean
 #
 
 class User < ActiveRecord::Base

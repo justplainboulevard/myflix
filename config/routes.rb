@@ -14,6 +14,11 @@ Rails.application.routes.draw do
 
   get 'people', to: 'relationships#index'
 
+  namespace :admin do
+    resources :videos, only: [:new, :create]
+  end
+
+  resources :payments, only: [:new, :create]
   resources :users, except: [:new, :index]
   resources :relationships, only: [:create, :destroy]
   resources :categories
