@@ -11,12 +11,20 @@ require 'fabrication'
 require 'faker'
 require 'database_cleaner'
 require 'sidekiq/testing'
+require 'vcr'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.javascript_driver = :webkit
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/cassettes'
+  config.hook_into :webmock
+  config.configure_rspec_metadata!
+  config.allow_http_connections_when_no_cassette = true
+end
 
 RSpec.configure do |config|
 

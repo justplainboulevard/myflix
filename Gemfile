@@ -49,6 +49,8 @@ group :test do
   gem 'database_cleaner', '1.2.0'
   gem 'launchy'
   gem 'shoulda-matchers', require: false
+  gem 'vcr', '~> 2.9.3'
+  gem 'webmock', '~> 1.19.0'
 end
 
 group :production do
