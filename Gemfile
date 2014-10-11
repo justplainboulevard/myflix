@@ -1,6 +1,9 @@
 
 source 'https://rubygems.org'
+
 ruby '2.1.1'
+
+gem 'rails', '~> 4.1.4'
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap_form', '~> 2.1.1'
@@ -12,7 +15,6 @@ gem 'haml-rails'
 gem 'jquery-rails', '~> 3.1.1'
 gem 'paratrooper', '~> 2.4.1'
 gem 'pg', '~> 0.17.1'
-gem 'rails', '~> 4.1.4'
 gem 'sass-rails', '~> 4.0.3'
 gem 'sentry-raven', :git => 'https://github.com/getsentry/raven-ruby.git'
 gem 'sidekiq', '~> 3.2.5'
