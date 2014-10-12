@@ -33,7 +33,7 @@ feature 'invite friend' do
     expect(find_field('Email address').value).to eq("#{@friend.email_address}")
   end
 
-  scenario 'friend successfully registers' do
+  scenario 'friend successfully registers', js: true do
 
     set_invitation
     register_friend
@@ -92,6 +92,10 @@ feature 'invite friend' do
     fill_in 'Email address', with: @second_invitation.invitee_email_address
     fill_in 'Password', with: 'password'
     fill_in 'Full name', with: @second_invitation.invitee_name
+    fill_in 'Credit card number', with: '4242424242424242'
+    fill_in 'Security code', with: '123'
+    select '1 - January', from: 'exp-month'
+    select '2016', from: 'exp-year'
     click_button 'Sign Up'
   end
 

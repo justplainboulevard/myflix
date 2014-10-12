@@ -17,7 +17,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
-Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :selenium # :webkit
 
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/cassettes'

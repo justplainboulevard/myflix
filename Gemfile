@@ -46,8 +46,10 @@ end
 group :test do
   gem 'capybara', '~> 2.4.1'
   gem 'capybara-email', '~> 2.4.0'
+  # gem 'capybara-webkit', '~> 1.3.0' # Install fails.
   gem 'database_cleaner', '1.2.0'
   gem 'launchy'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
   gem 'vcr', '~> 2.9.3'
   gem 'webmock', '~> 1.19.0'

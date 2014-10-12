@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-feature 'invite friend' do
+feature 'invite friend', js: true do
 
   after { clear_emails }
 
@@ -48,14 +48,18 @@ feature 'invite friend' do
     current_email.click_link 'Go to MyFlix!'
     fill_in 'Password', with: 'password'
     fill_in 'Full name', with: 'William Tecumseh Sherman'
+    fill_in 'Credit card number', with: '4242424242424242'
+    fill_in 'Security code', with: '123'
+    select '1 - January', from: 'exp-month'
+    select '2016', from: 'exp-year'
     click_button 'Sign Up'
   end
 
   # NB: My code automatically signs in a new user upon successful registration.
   # def friend_signs_in
-    # fill_in 'Email address', with: 'williet@example.com'
-    # fill_in 'Password', with: 'password'
-    # click_button 'Sign In'
+  #   fill_in 'Email address', with: 'williet@example.com'
+  #   fill_in 'Password', with: 'password'
+  #   click_button 'Sign In'
   # end
 
   def friend_should_follow_user
