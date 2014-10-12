@@ -58,10 +58,9 @@ private
   end
 
   def charge_card
-    token = params[:stripeToken]
-    charge = StripeWrapper::Charge.create(
+    StripeWrapper::Charge.create(
         amount: 999,
-        card: token,
+        card: params[:stripeToken],
         description: "MyFlix subscription charge for #{@user.email_address}"
       )
   end
