@@ -7,7 +7,10 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with valid attributes' do
 
-      before { post :create, user: Fabricate.attributes_for(:user) }
+      before :each do
+        allow(StripeWrapper::Charge).to receive(:create)
+        post :create, user: Fabricate.attributes_for(:user)
+      end
 
       after { ActionMailer::Base.deliveries.clear }
 
@@ -47,6 +50,7 @@ RSpec.describe UsersController, type: :controller do
       before :each do
         @user = Fabricate(:user)
         @invitation = Fabricate(:invitation, inviter: @user, invitee_email_address: 'jdoe@example.com')
+        allow(StripeWrapper::Charge).to receive(:create)
         post :create, user: { email_address: 'jdoe@example.com', password: 'password', full_name: 'John Doe' }, invitation_token: @invitation.token
         @new_user = User.where(email_address: 'jdoe@example.com').first
       end
@@ -68,7 +72,10 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with invalid attributes' do
 
-      before { post :create, user: Fabricate.attributes_for(:user, email_address: '') }
+      before :each do
+        allow(StripeWrapper::Charge).to receive(:create)
+        post :create, user: Fabricate.attributes_for(:user, email_address: '')
+      end
 
       after { ActionMailer::Base.deliveries.clear }
 

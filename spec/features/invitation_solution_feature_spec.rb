@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-feature 'invite friend', js: true do
+feature 'invite friend', { js: true, vcr: true } do
 
   after { clear_emails }
 
@@ -24,12 +24,6 @@ feature 'invite friend', js: true do
     click_button 'Sign In'
   end
 
-  # NB: My initial unsophisticated method. Works, but not as elegant.
-  # def sign_out
-  #   click_link 'Welcome'
-  #   click_link 'Sign Out'
-  # end
-
   def sign_out
     visit signout_path
   end
@@ -50,17 +44,17 @@ feature 'invite friend', js: true do
     fill_in 'Full name', with: 'William Tecumseh Sherman'
     fill_in 'Credit card number', with: '4242424242424242'
     fill_in 'Security code', with: '123'
-    select '1 - January', from: 'exp-month'
-    select '2016', from: 'exp-year'
-    click_button 'Sign Up'
+    select '1 - January', from: 'date_month'
+    select '2016', from: 'date_year'
+    click_button 'Sign up'
   end
 
   # NB: My code automatically signs in a new user upon successful registration.
-  # def friend_signs_in
-  #   fill_in 'Email address', with: 'williet@example.com'
-  #   fill_in 'Password', with: 'password'
-  #   click_button 'Sign In'
-  # end
+  def friend_signs_in
+    fill_in 'Email address', with: 'williet@example.com'
+    fill_in 'Password', with: 'password'
+    click_button 'Sign In'
+  end
 
   def friend_should_follow_user
     click_link 'People'

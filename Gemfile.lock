@@ -363,6 +363,7 @@ DEPENDENCIES
   pry-doc (~> 0.6.0)
   rails (~> 4.1.4)
   rails_12factor (~> 0.0.2)
+  rspec-mocks
   rspec-rails (~> 3.0.1)
   sass-rails (~> 4.0.3)
   selenium-webdriver

@@ -6,6 +6,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'capybara/rails'
+require 'capybara/rspec'
 require 'capybara/email/rspec'
 require 'fabrication'
 require 'faker'
@@ -17,13 +18,17 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
-Capybara.javascript_driver = :selenium # :webkit
+# Capybara.javascript_driver = :webkit
+Capybara.default_wait_time = 5
+Capybara.server_port = 52662
 
 VCR.configure do |config|
+
   config.cassette_library_dir = 'spec/cassettes'
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.allow_http_connections_when_no_cassette = true
+  config.ignore_localhost = true
 end
 
 RSpec.configure do |config|

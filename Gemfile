@@ -39,6 +39,7 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'pry'
   gem 'pry-doc', '~> 0.6.0'
+  gem 'rspec-mocks'
   gem 'rspec-rails', '~> 3.0.1'
   # gem 'rspec-sidekiq', '~> 1.1.0'
 end
