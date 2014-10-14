@@ -10,6 +10,7 @@ gem 'bootstrap_form', '~> 2.1.1'
 gem 'bootstrap-sass', '~> 3.2.0.0'
 gem 'carrierwave', '~> 0.10.0'
 gem 'coffee-rails', '~> 4.0.1'
+gem 'draper', '~> 1.4.0'
 gem 'fabrication', '~> 2.11.3' # Including here, rather than in development/text, so that I can seed the database on Heroku.
 gem 'faker', '~> 1.4.2' # Including here, rather than in development/text, so that I can seed the database on Heroku.
 gem 'figaro', '~> 1.0.0'

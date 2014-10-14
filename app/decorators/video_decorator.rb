@@ -1,0 +1,4 @@
+
+class VideoDecorator < ApplicationDecorator
+
+end
