@@ -19,6 +19,10 @@ RSpec.describe UsersController, type: :controller do
         expect(assigns(:user)).to be_instance_of(User)
       end
 
+      it 'calls StripeWrapper::Charge' do
+        expect(StripeWrapper::Charge).to have_received(:create)
+      end
+
       it 'creates a user in the database' do
         expect(User.count).to eq(1)
       end
@@ -59,6 +63,10 @@ RSpec.describe UsersController, type: :controller do
 
       after { ActionMailer::Base.deliveries.clear }
 
+      it 'calls StripeWrapper::Charge' do
+        expect(StripeWrapper::Charge).to have_received(:create)
+      end
+
       it 'makes the invitee follow the inviter' do
         expect(@new_user.follows?(@user)).to eq(true)
       end
@@ -80,6 +88,10 @@ RSpec.describe UsersController, type: :controller do
         post :create, user: Fabricate.attributes_for(:user), stripeToken: '12341234'
       end
 
+      it 'calls StripeWrapper::Charge' do
+        expect(StripeWrapper::Charge).to have_received(:create)
+      end
+
       it 'does not create a new user in the database' do
         expect(User.first).to eq(nil)
         expect(User.count).to eq(0)
@@ -98,8 +110,6 @@ RSpec.describe UsersController, type: :controller do
     context 'with invalid personal information' do
 
       before :each do
-        charge = double(:charge, successful?: true)
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
         post :create, user: Fabricate.attributes_for(:user, email_address: '')
       end
 
@@ -114,7 +124,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       it 'does not charge the user\'s credit card' do
-
+        expect(StripeWrapper::Charge).not_to receive(:create)
       end
 
       it 'renders the users/new template' do
