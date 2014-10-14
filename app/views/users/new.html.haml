@@ -19,13 +19,13 @@
         %fieldset
           %span.payment-errors
           .form-group
-            %label.control-label.col-sm-3 Credit card number
+            %label.control-label.col-sm-3{ for: 'credit-card-mumber' } Credit card number
             %div.col-sm-6
-              %input{ type: 'text', 'data-stripe' => 'number' }
+              %input#credit-card-mumber{ type: 'text', 'data-stripe' => 'number' }
           .form-group
-            %label.control-label.col-sm-3 Security code
+            %label.control-label.col-sm-3{ for: 'security-code' } Security code
             %div.col-sm-6
-              %input{ type: 'text', 'data-stripe' => 'cvc' }
+              %input#security-code{ type: 'text', 'data-stripe' => 'cvc' }
           .form-group
             %label.control-label.col-sm-3 Expiration date
             %div.col-sm-6
