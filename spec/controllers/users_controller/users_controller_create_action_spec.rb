@@ -5,10 +5,11 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'POST #create' do
 
-    context 'with valid attributes' do
+    context 'with valid personal information and valid credit card' do
 
       before :each do
-        allow(StripeWrapper::Charge).to receive(:create)
+        charge = double(:charge, successful?: true)
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
         post :create, user: Fabricate.attributes_for(:user)
       end
 
@@ -45,12 +46,13 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
-    context 'by invitation with valid attributes' do
+    context 'by invitation with valid personal information and valid credit card' do
 
       before :each do
         @user = Fabricate(:user)
         @invitation = Fabricate(:invitation, inviter: @user, invitee_email_address: 'jdoe@example.com')
-        allow(StripeWrapper::Charge).to receive(:create)
+        charge = double(:charge, successful?: true)
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
         post :create, user: { email_address: 'jdoe@example.com', password: 'password', full_name: 'John Doe' }, invitation_token: @invitation.token
         @new_user = User.where(email_address: 'jdoe@example.com').first
       end
@@ -70,10 +72,34 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
-    context 'with invalid attributes' do
+    context 'with valid personal information and declined credit card' do
 
       before :each do
-        allow(StripeWrapper::Charge).to receive(:create)
+        charge = double(:charge, successful?: false, error_message: 'Your card was declined.')
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: '12341234'
+      end
+
+      it 'does not create a new user in the database' do
+        expect(User.first).to eq(nil)
+        expect(User.count).to eq(0)
+      end
+
+      it 'flashes an error alert' do
+        expect(flash[:error]).not_to be_blank
+        expect(flash[:error]).to be_present
+      end
+
+      it 'renders the users/new template' do
+        expect(response).to render_template :new
+      end
+    end
+
+    context 'with invalid personal information' do
+
+      before :each do
+        charge = double(:charge, successful?: true)
+        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
         post :create, user: Fabricate.attributes_for(:user, email_address: '')
       end
 
@@ -85,6 +111,10 @@ RSpec.describe UsersController, type: :controller do
 
       it 'does not create a user in the database' do
         expect(User.first).to eq(nil)
+      end
+
+      it 'does not charge the user\'s credit card' do
+
       end
 
       it 'renders the users/new template' do

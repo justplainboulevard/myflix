@@ -26,13 +26,19 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @user.save
-      handle_invitation
-      charge_card
-      UserMailer.delay.welcome_email(@user)
-      session[:user_id] = @user.id
-      flash[:success] = "You are now registered as #{@user.full_name}. Welcome to MyFlix!"
-      redirect_to signin_path
+    if @user.valid?
+      charge = charge_card
+      if charge.successful?
+        @user.save
+        handle_invitation
+        UserMailer.delay.welcome_email(@user)
+        session[:user_id] = @user.id
+        flash[:success] = "You are now registered as #{@user.full_name}. Welcome to MyFlix!"
+        redirect_to signin_path
+      else
+        flash[:error] = charge.error_message # 'Your card was declined.'
+        render :new
+      end
     else
       render :new
     end
