@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-feature 'invite friend', { js: true, vcr: true } do
+RSpec.feature 'invite friend', { js: true, vcr: true } do
 
   after { clear_emails }
 

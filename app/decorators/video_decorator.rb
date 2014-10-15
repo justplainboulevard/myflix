@@ -8,7 +8,7 @@ class VideoDecorator < ApplicationDecorator
   decorates_finders
 
   def display_average_rating
-    content_tag(:span, "Rating: #{self.average_rating}/5.0")
+    object.reviews.present? ? content_tag(:span, "Rating: #{self.average_rating}/5.0") : "Be the first to review #{object.title}!"
   end
 
   def average_rating

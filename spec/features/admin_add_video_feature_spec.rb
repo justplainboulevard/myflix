@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-feature 'add video' do
+RSpec.feature 'add video' do
 
   scenario 'admin user successfully adds a new video to the site' do
 
