@@ -7,8 +7,9 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with valid personal information and valid credit card' do
 
+      let(:charge) { double(:charge, successful?: true) }
+
       before :each do
-        charge = double(:charge, successful?: true)
         allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
         post :create, user: Fabricate.attributes_for(:user)
       end
