@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-feature 'invite friend' do
+RSpec.feature 'invite friend' do
 
   before { clear_emails }
   after { clear_emails }

@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-feature 'password reset' do
+RSpec.feature 'password reset' do
 
   background do
 
