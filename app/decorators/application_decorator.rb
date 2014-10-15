@@ -1,4 +1,4 @@
 
-class ApplicationDecorator < Draper::ApplicationDecorator
+class ApplicationDecorator < Draper::Decorator
 
 end
