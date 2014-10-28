@@ -11,8 +11,8 @@ class UserSignup
   def sign_up(stripe_token, invitation_token)
 
     if @user.valid?
-      charge = charge_card(stripe_token)
-      if charge.successful?
+      customer = create_customer(stripe_token)
+      if customer.successful?
         @user.save
         handle_invitation(invitation_token)
         UserMailer.delay.welcome_email(@user)
@@ -20,9 +20,10 @@ class UserSignup
         self
       else
         @status = :failed
-        @error_message = charge.error_message
+        @error_message = customer.error_message
         self
       end
+
     else
       @status = :failed
       @error_message = 'You provided invalid information. Please check the errors noted below.'
@@ -47,12 +48,11 @@ private
     end
   end
 
-  def charge_card(stripe_token)
+  def create_customer(stripe_token)
 
-    StripeWrapper::Charge.create(
-        amount: 999,
-        card: stripe_token,
-        description: "MyFlix subscription charge for #{@user.email_address}"
+    StripeWrapper::Customer.create(
+        user: @user,
+        card: stripe_token
       )
   end
 end

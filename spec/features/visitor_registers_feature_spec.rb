@@ -196,6 +196,6 @@ def register_visitor(email_address, password, full_name, card_number)
   fill_in 'Credit card number', with: card_number
   fill_in 'Security code', with: '123'
   select '1 - January', from: 'date_month'
-  select '2016', from: 'date_year'
+  select "#{Time.now.year + 1}", from: 'date_year'
   click_button 'Sign up'
 end

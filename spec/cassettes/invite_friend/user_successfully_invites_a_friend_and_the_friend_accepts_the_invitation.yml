@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&currency=usd&card=tok_14nbGKFYOxyDZoxzpMcCPY3G&description=MyFlix%20subscription%20charge%20for%20williet%40example.com
+      string: card=tok_14sigJFYOxyDZoxzasrhNIhX&email=williet%40example.com&plan=myflix_basic
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -22,7 +22,7 @@ http_interactions:
         maatllc.server 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT
         2014; root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '130'
+      - '79'
   response:
     status:
       code: 200
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 14 Oct 2014 19:47:17 GMT
+      - Tue, 28 Oct 2014 22:43:16 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '1292'
+      - '2276'
       Access-Control-Allow-Credentials:
       - 'true'
       Access-Control-Allow-Methods:
@@ -45,7 +45,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - 2f08970f-2eb6-4487-a155-95af627a1ad6
+      - 007f3d04-8586-4a5e-be88-717a7ce98feb
       Stripe-Version:
       - '2014-10-07'
       Strict-Transport-Security:
@@ -54,58 +54,90 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_14nbGLFYOxyDZoxztbMX3cz2",
-          "object": "charge",
-          "created": 1413316037,
+          "object": "customer",
+          "created": 1414536196,
+          "id": "cus_52oIETqRNZeMzu",
           "livemode": false,
-          "paid": true,
-          "amount": 999,
-          "currency": "usd",
-          "refunded": false,
-          "card": {
-            "id": "card_14nbGKFYOxyDZoxz6abPUxuD",
-            "object": "card",
-            "last4": "4242",
-            "brand": "Visa",
-            "funding": "credit",
-            "exp_month": 1,
-            "exp_year": 2016,
-            "fingerprint": "igHoBMrDb8HclSRS",
-            "country": "US",
-            "name": null,
-            "address_line1": null,
-            "address_line2": null,
-            "address_city": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_country": null,
-            "cvc_check": "pass",
-            "address_line1_check": null,
-            "address_zip_check": null,
-            "customer": null
-          },
-          "captured": true,
-          "refunds": {
-            "object": "list",
-            "total_count": 0,
-            "has_more": false,
-            "url": "/v1/charges/ch_14nbGLFYOxyDZoxztbMX3cz2/refunds",
-            "data": []
-          },
-          "balance_transaction": "txn_14nbGLFYOxyDZoxzfkVbVEEh",
-          "failure_message": null,
-          "failure_code": null,
-          "amount_refunded": 0,
-          "customer": null,
-          "invoice": null,
-          "description": "MyFlix subscription charge for williet@example.com",
-          "dispute": null,
+          "description": null,
+          "email": "williet@example.com",
+          "delinquent": false,
           "metadata": {},
-          "statement_description": null,
-          "receipt_email": null,
-          "receipt_number": null,
-          "shipping": null
+          "subscriptions": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_52oIETqRNZeMzu/subscriptions",
+            "data": [
+              {
+                "id": "sub_52oIx4LVzYVp4S",
+                "plan": {
+                  "interval": "month",
+                  "name": "MyFlix Basic",
+                  "created": 1414524533,
+                  "amount": 1000,
+                  "currency": "usd",
+                  "id": "myflix_basic",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": 30,
+                  "metadata": {},
+                  "statement_description": "MyFlix Basic"
+                },
+                "object": "subscription",
+                "start": 1414536196,
+                "status": "trialing",
+                "customer": "cus_52oIETqRNZeMzu",
+                "cancel_at_period_end": false,
+                "current_period_start": 1414536196,
+                "current_period_end": 1417128196,
+                "ended_at": null,
+                "trial_start": 1414536196,
+                "trial_end": 1417128196,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "usd",
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_52oIETqRNZeMzu/cards",
+            "data": [
+              {
+                "id": "card_14sigJFYOxyDZoxzTZhW9auC",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 1,
+                "exp_year": 2016,
+                "fingerprint": "igHoBMrDb8HclSRS",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "dynamic_last4": null,
+                "customer": "cus_52oIETqRNZeMzu"
+              }
+            ]
+          },
+          "default_card": "card_14sigJFYOxyDZoxzTZhW9auC"
         }
     http_version: 
-  recorded_at: Tue, 14 Oct 2014 19:47:17 GMT
+  recorded_at: Tue, 28 Oct 2014 22:43:16 GMT
 recorded_with: VCR 2.9.3

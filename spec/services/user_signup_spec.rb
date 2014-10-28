@@ -7,17 +7,17 @@ RSpec.describe UserSignup do
 
     context 'with valid personal information and valid credit card' do
 
-      let(:charge) { double(:charge, successful?: true) }
+      let(:customer) { double(:customer, successful?: true) }
 
       before :each do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
         UserSignup.new(Fabricate.build(:user)).sign_up('a_stripe_token', nil)
       end
 
       after { ActionMailer::Base.deliveries.clear }
 
-      it 'calls StripeWrapper::Charge' do
-        expect(StripeWrapper::Charge).to have_received(:create)
+      it 'calls StripeWrapper::Customer' do
+        expect(StripeWrapper::Customer).to have_received(:create)
       end
 
       it 'creates a user in the database' do
@@ -41,20 +41,20 @@ RSpec.describe UserSignup do
 
     context 'by invitation with valid personal information and valid credit card' do
 
-      let(:charge) { double(:charge, successful?: true) }
+      let(:customer) { double(:customer, successful?: true) }
       let(:user) { Fabricate(:user) }
       let(:invitation) { Fabricate(:invitation, inviter: user, invitee_email_address: 'jdoe@example.com') }
 
       before :each do
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
         UserSignup.new(Fabricate.build(:user, email_address: 'jdoe@example.com', password: 'password', full_name: 'John Doe')).sign_up('a_stripe_token', invitation.token)
         @new_user = User.where(email_address: 'jdoe@example.com').first
       end
 
       after { ActionMailer::Base.deliveries.clear }
 
-      it 'calls StripeWrapper::Charge' do
-        expect(StripeWrapper::Charge).to have_received(:create)
+      it 'calls StripeWrapper::Customer' do
+        expect(StripeWrapper::Customer).to have_received(:create)
       end
 
       it 'sends an email' do
@@ -87,13 +87,13 @@ RSpec.describe UserSignup do
     context 'with valid personal information and declined credit card' do
 
       before :each do
-        charge = double(:charge, successful?: false, error_message: 'Your card was declined.')
-        allow(StripeWrapper::Charge).to receive(:create).and_return(charge)
+        customer = double(:customer, successful?: false, error_message: 'Your card was declined.')
+        allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
         UserSignup.new(Fabricate.build(:user)).sign_up('a_stripe_token', nil)
       end
 
-      it 'calls StripeWrapper::Charge' do
-        expect(StripeWrapper::Charge).to have_received(:create)
+      it 'calls StripeWrapper::Customer' do
+        expect(StripeWrapper::Customer).to have_received(:create)
       end
 
       it 'does not create a new user in the database' do
@@ -115,7 +115,7 @@ RSpec.describe UserSignup do
       end
 
       it 'does not charge the user\'s credit card' do
-        expect(StripeWrapper::Charge).not_to receive(:create)
+        expect(StripeWrapper::Customer).not_to receive(:create)
       end
 
       it 'does not send an email' do

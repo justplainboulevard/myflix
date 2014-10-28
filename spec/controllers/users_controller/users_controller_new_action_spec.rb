@@ -5,9 +5,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #new' do
 
-    before :each do
-      get :new
-    end
+    before { get :new }
 
     it 'sets the @user instance variable' do
       expect(assigns(:user)).to be_new_record
