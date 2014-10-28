@@ -3,6 +3,8 @@ class VideosController < ApplicationController
 
   before_action :require_user
 
+  decorates_assigned :video
+
   def index
     @categories = Category.all
     @videos = Video.all

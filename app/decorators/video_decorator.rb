@@ -1,15 +1,23 @@
 
 class VideoDecorator < ApplicationDecorator
 
+  include Draper::LazyHelpers
+
   delegate_all
 
+  decorates_finders
+
+  def display_average_rating
+    object.reviews.present? ? content_tag(:span, "Rating: #{self.average_rating}/5.0") : "Be the first to review #{object.title}!"
+  end
+
   def average_rating
-    if self.reviews.count >= 1
+    if object.reviews.count >= 1
       total = 0.0
-      self.reviews.each do |review|
+      object.reviews.each do |review|
         total += ( review[:rating] || 0.0 )
       end
-      (total / self.reviews.count).round(1)
+      (total / object.reviews.count).round(1)
     else
       0.0
     end

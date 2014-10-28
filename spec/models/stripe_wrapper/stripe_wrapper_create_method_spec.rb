@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-describe StripeWrapper, type: :model do
+RSpec.describe StripeWrapper, type: :model do
 
   describe StripeWrapper::Charge do
 

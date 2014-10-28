@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-feature 'visitor registers', js: true do
+RSpec.feature 'visitor registers', js: true do
 
   let(:email_address) { 'williet@example.com' }
   let(:password) { 'password' }

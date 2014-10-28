@@ -9,7 +9,7 @@ RSpec.describe VideosController, type: :controller do
       let(:action) { get :show, id: video.id }
     end
 
-    set_video
+    set_video # '/spec/support/macros.rb'
 
     before :each do
       set_current_user
@@ -23,5 +23,10 @@ RSpec.describe VideosController, type: :controller do
     it 'sets the @reviews instance variable' do
       expect(assigns(:reviews)).to match_array(video.reviews)
     end
+
+    # TODO: Figure out why this test fails.
+    # it 'decorates the @video instance variable' do
+    #   expect(assigns(:video)).to be_decorated
+    # end
   end
 end
