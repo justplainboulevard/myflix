@@ -7,17 +7,16 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with a valid token' do
 
-      before :each do
-        @invitation = Fabricate(:invitation)
-        get :new_with_invitation_token, token: @invitation.token
-      end
+      let(:invitation) { Fabricate(:invitation) }
+
+      before { get :new_with_invitation_token, token: invitation.token }
 
       it 'sets the @user instance variable with the invitee\'s email address' do
-        expect(assigns(:user).email_address).to eq(@invitation.invitee_email_address)
+        expect(assigns(:user).email_address).to eq(invitation.invitee_email_address)
       end
 
       it 'sets the @invitation_token instance variable' do
-        expect(assigns(:invitation_token)).to eq(@invitation.token)
+        expect(assigns(:invitation_token)).to eq(invitation.token)
       end
 
       it 'creates an instance of the User class' do
@@ -39,9 +38,7 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with an invalid token' do
 
-      before :each do
-        get :new_with_invitation_token, token: 'invalid_token'
-      end
+      before { get :new_with_invitation_token, token: 'invalid_token' }
 
       it 'redirects the invitee to the expired token path' do
         expect(response).to redirect_to expired_token_path
