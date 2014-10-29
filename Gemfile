@@ -11,8 +11,8 @@ gem 'bootstrap-sass', '~> 3.2.0.0'
 gem 'carrierwave', '~> 0.10.0'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'draper', '~> 1.4.0'
-gem 'fabrication', '~> 2.11.3' # Including here, rather than in development/text, so that I can seed the database on Heroku.
-gem 'faker', '~> 1.4.2' # Including here, rather than in development/text, so that I can seed the database on Heroku.
+gem 'fabrication', '~> 2.11.3' # Including here, rather than in development/test, so that I can seed the database on Heroku.
+gem 'faker', '~> 1.4.2' # Including here, rather than in development/test, so that I can seed the database on Heroku.
 gem 'figaro', '~> 1.0.0'
 gem 'fog', '~> 1.23.0'
 gem 'foreman', '~> 0.75.0'
@@ -23,7 +23,7 @@ gem 'nested_form', '~> 0.3.2'
 gem 'paratrooper', '~> 2.4.1'
 gem 'pg', '~> 0.17.1'
 gem 'sass-rails', '~> 4.0.3'
-gem 'sentry-raven', :git => 'https://github.com/getsentry/raven-ruby.git'
+gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
 gem 'sidekiq', '~> 3.2.5'
 gem 'stripe', '~> 1.15.0'
 gem 'uglifier', '~> 2.5.3'
@@ -34,8 +34,12 @@ group :development do
   gem 'annotate', '~> 2.6.5'
   gem 'better_errors', '~> 1.1.0'
   gem 'binding_of_caller'
+  gem 'bullet', '~> 4.14.0'
   gem 'letter_opener', '~> 1.2.0'
+  gem 'ruby_gntp', '~> 0.3.4' # To enable bullet gem.
+  gem 'ruby-growl', '~> 4.1' # To enable bullet gem.
   gem 'thin', '~> 1.6.2'
+  gem 'uniform_notifier', '~> 1.6.2' # To enable bullet gem.
 end
 
 group :development, :test do
@@ -55,6 +59,7 @@ group :test do
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
+  gem 'simplecov', require: false
   gem 'vcr', '~> 2.9.3'
   gem 'webmock', '~> 1.19.0'
 end
