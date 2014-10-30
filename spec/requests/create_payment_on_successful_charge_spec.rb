@@ -5,94 +5,80 @@ RSpec.describe 'create payment on successful charge', type: :request do
 
   let(:event_data) do
     {
-      "id" => "evt_14t1cbFYOxyDZoxzaIyPO0kB",
-      "created" => 1414609001,
+      "id" => "evt_14tNQ5FYOxyDZoxzux6jgJdf",
+      "created" => 1414692793,
       "livemode" => false,
-      "type" => "invoice.created",
+      "type" => "charge.succeeded",
       "data" => {
         "object" => {
-          "date" => 1414609001,
-          "id" => "in_14t1cbFYOxyDZoxzciYaYqPd",
-          "period_start" => 1414609001,
-          "period_end" => 1414609001,
-          "lines" => {
+          "id" => "ch_14tNQ5FYOxyDZoxzjcKshT78",
+          "object" => "charge",
+          "created" => 1414692793,
+          "livemode" => false,
+          "paid" => true,
+          "amount" => 1500,
+          "currency" => "usd",
+          "refunded" => false,
+          "card" => {
+            "id" => "card_14tNQ4FYOxyDZoxzBm2iUDDa",
+            "object" => "card",
+            "last4" => "0000",
+            "brand" => "JCB",
+            "funding" => "credit",
+            "exp_month" => 10,
+            "exp_year" => 2018,
+            "fingerprint" => "DLm4zluqJGUTS9Fr",
+            "country" => "JP",
+            "name" => nil,
+            "address_line1" => nil,
+            "address_line2" => nil,
+            "address_city" => nil,
+            "address_state" => nil,
+            "address_zip" => nil,
+            "address_country" => nil,
+            "cvc_check" => "pass",
+            "address_line1_check" => nil,
+            "address_zip_check" => nil,
+            "dynamic_last4" => nil,
+            "customer" => "cus_53UO0LG3VI6X6e"
+          },
+          "captured" => true,
+          "refunds" => {
             "object" => "list",
-            "total_count" => 1,
+            "total_count" => 0,
             "has_more" => false,
-            "url" => "/v1/invoices/in_14t1cbFYOxyDZoxzciYaYqPd/lines",
+            "url" => "/v1/charges/ch_14tNQ5FYOxyDZoxzjcKshT78/refunds",
             "data" => [
-              {
-                "id" => "sub_537ss6olixdgsQ",
-                "object" => "line_item",
-                "type" => "subscription",
-                "livemode" => false,
-                "amount" => 0,
-                "currency" => "usd",
-                "proration" => false,
-                "period" => {
-                  "start" => 1414609001,
-                  "end" => 1417201001
-                },
-                "subscription" => nil,
-                "quantity" => 1,
-                "plan" => {
-                  "interval" => "month",
-                  "name" => "MyFlix Basic",
-                  "created" => 1414524533,
-                  "amount" => 1000,
-                  "currency" => "usd",
-                  "id" => "myflix_basic",
-                  "object" => "plan",
-                  "livemode" => false,
-                  "interval_count" => 1,
-                  "trial_period_days" => 30,
-                  "metadata" => {
-                  },
-                  "statement_description" => "MyFlix Basic"
-                },
-                "description" => nil,
-                "metadata" => {
-                }
-              }
+
             ]
           },
-          "subtotal" => 0,
-          "total" => 0,
-          "customer" => "cus_537skIMkMhOBt9",
-          "object" => "invoice",
-          "attempted" => true,
-          "closed" => true,
-          "forgiven" => false,
-          "paid" => true,
-          "livemode" => false,
-          "attempt_count" => 0,
-          "amount_due" => 0,
-          "currency" => "usd",
-          "starting_balance" => 0,
-          "ending_balance" => 0,
-          "next_payment_attempt" => nil,
-          "webhooks_delivered_at" => nil,
-          "charge" => nil,
-          "discount" => nil,
-          "application_fee" => nil,
-          "subscription" => "sub_537ss6olixdgsQ",
+          "balance_transaction" => "txn_14tNQ5FYOxyDZoxzX7Ne0UYM",
+          "failure_message" => nil,
+          "failure_code" => nil,
+          "amount_refunded" => 0,
+          "customer" => "cus_53UO0LG3VI6X6e",
+          "invoice" => "in_14tNQ5FYOxyDZoxzfC7AqTbD",
+          "description" => nil,
+          "dispute" => nil,
           "metadata" => {
           },
-          "statement_description" => nil,
-          "description" => nil,
-          "receipt_number" => nil
+          "statement_description" => "MYFLIX BASIC+",
+          "fraud_details" => {
+            "stripe_report" => nil,
+            "user_report" => nil
+          },
+          "receipt_email" => nil,
+          "receipt_number" => nil,
+          "shipping" => nil
         }
       },
       "object" => "event",
       "pending_webhooks" => 1,
-      "request" => "iar_537sbk4HctP7FI"
+      "request" => "iar_53UONYSCTOb5A1"
     }
   end
 
-  let(:subject_user) { Fabricate(:user, customer_token: 'cus_537skIMkMhOBt9') }
-
   before :each do
-
     post '/stripe_events', event_data
   end
 
@@ -101,10 +87,11 @@ RSpec.describe 'create payment on successful charge', type: :request do
   end
 
   it 'creates a payment associated with the correct user' do
+    subject_user = Fabricate(:user, customer_token: 'cus_53UO0LG3VI6X6e')
     expect(Payment.first.user).to eq(subject_user)
   end
 
   it 'creates a payment of the correct amount' do
-    expect(Payment.first.amount).to eq(999)
+    expect(Payment.first.amount).to eq(1500)
   end
 end
