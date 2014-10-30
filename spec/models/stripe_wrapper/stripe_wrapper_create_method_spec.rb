@@ -28,7 +28,7 @@ RSpec.describe StripeWrapper, type: :model do
             description: 'A valid test charge.'
         )}
 
-        it 'successfully makes a charge' do
+        it 'makes a charge' do
           # expect(response.amount).to eq(999)
           # expect(response.currency).to eq('usd')
           # expect(response.description).to eq('A valid test charge.')
@@ -74,8 +74,12 @@ RSpec.describe StripeWrapper, type: :model do
             card: token
         )}
 
-        it 'successfully creates a new customer' do
+        it 'creates a new customer' do
           expect(response).to be_successful
+        end
+
+        it 'returns the customer token for the new customer' do
+          expect(response.customer_token).to be_present
         end
       end
 

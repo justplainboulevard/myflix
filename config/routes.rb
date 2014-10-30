@@ -40,4 +40,6 @@ Rails.application.routes.draw do
   resources :invitations, only: [:new, :create]
 
   get 'ui(/:action)', controller: 'ui'
+
+  mount StripeEvent::Engine => '/stripe_events'
 end
