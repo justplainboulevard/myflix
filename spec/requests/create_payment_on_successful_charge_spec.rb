@@ -78,6 +78,8 @@ RSpec.describe 'create payment on successful charge', type: :request do
     }
   end
 
+  let!(:subject_user) { Fabricate(:user, customer_token: 'cus_53UO0LG3VI6X6e') }
+
   before :each do
     post '/stripe_events', event_data
   end
@@ -87,7 +89,6 @@ RSpec.describe 'create payment on successful charge', type: :request do
   end
 
   it 'creates a payment associated with the correct user' do
-    subject_user = Fabricate(:user, customer_token: 'cus_53UO0LG3VI6X6e')
     expect(Payment.first.user).to eq(subject_user)
   end
 
