@@ -95,4 +95,8 @@ RSpec.describe 'create payment on successful charge', type: :request do
   it 'creates a payment of the correct amount' do
     expect(Payment.first.amount).to eq(1500)
   end
+
+  it 'creates a payment with the correct reference id' do
+    expect(Payment.first.reference_id).to eq('ch_14tNQ5FYOxyDZoxzjcKshT78')
+  end
 end
