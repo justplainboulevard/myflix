@@ -10,6 +10,7 @@
 #  updated_at      :datetime
 #  token           :string(255)
 #  admin           :boolean
+#  customer_token  :string(255)
 #
 
 class User < ActiveRecord::Base
