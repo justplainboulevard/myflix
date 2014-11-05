@@ -1,7 +1,6 @@
 
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
-//= require bootstrap-sprockets
 //= require jquery_nested_form
+//= require bootstrap-sprockets
 //= require_tree .
