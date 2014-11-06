@@ -13,6 +13,7 @@ class UserSignup
     if @user.valid?
       customer = create_customer(stripe_token)
       if customer.successful?
+        @user.customer_token = customer.customer_token
         @user.save
         handle_invitation(invitation_token)
         UserMailer.delay.welcome_email(@user)

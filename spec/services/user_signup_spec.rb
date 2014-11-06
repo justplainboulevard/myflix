@@ -7,7 +7,7 @@ RSpec.describe UserSignup do
 
     context 'with valid personal information and valid credit card' do
 
-      let(:customer) { double(:customer, successful?: true) }
+      let(:customer) { double(:customer, successful?: true, customer_token: 'abcdefg') }
 
       before :each do
         allow(StripeWrapper::Customer).to receive(:create).and_return(customer)
@@ -22,6 +22,10 @@ RSpec.describe UserSignup do
 
       it 'creates a user in the database' do
         expect(User.count).to eq(1)
+      end
+
+      it 'stores the stripe customer token associated with the new user' do
+        expect(User.last.customer_token).to eq('abcdefg')
       end
 
       it 'sends an email' do
@@ -41,7 +45,7 @@ RSpec.describe UserSignup do
 
     context 'by invitation with valid personal information and valid credit card' do
 
-      let(:customer) { double(:customer, successful?: true) }
+      let(:customer) { double(:customer, successful?: true, customer_token: 'abcdefg') }
       let(:user) { Fabricate(:user) }
       let(:invitation) { Fabricate(:invitation, inviter: user, invitee_email_address: 'jdoe@example.com') }
 
@@ -55,6 +59,14 @@ RSpec.describe UserSignup do
 
       it 'calls StripeWrapper::Customer' do
         expect(StripeWrapper::Customer).to have_received(:create)
+      end
+
+      it 'creates a user in the database' do
+        expect(User.count).to eq(2)
+      end
+
+      it 'stores the stripe customer token associated with the new user' do
+        expect(User.last.customer_token).to eq('abcdefg')
       end
 
       it 'sends an email' do

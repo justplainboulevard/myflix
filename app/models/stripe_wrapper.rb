@@ -49,7 +49,7 @@ module StripeWrapper
         response = Stripe::Customer.create(
           card: options[:card],
           email: options[:user].email_address,
-          plan: 'myflix_basic'
+          plan: 'myflix_basic_plus'
         )
         new(response: response)
 
@@ -61,6 +61,11 @@ module StripeWrapper
     def successful?
 
       response.present?
+    end
+
+    def customer_token
+
+      response.id
     end
   end
 end

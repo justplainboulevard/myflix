@@ -9,6 +9,7 @@
 #  large_cover :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
+#  video_url   :string(255)
 #
 
 class Video < ActiveRecord::Base
