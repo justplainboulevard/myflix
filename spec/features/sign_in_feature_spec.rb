@@ -44,4 +44,16 @@ RSpec.feature 'user signs in', type: :feature do
 
     expect(page).to have_content 'The username or password that you provided is incorrect'
   end
+
+  scenario 'when inactive' do
+
+    inactive_user = Fabricate(:user, active: false)
+
+    visit signin_path
+    fill_in 'Email address', with: inactive_user.email_address
+    fill_in 'Password', with: inactive_user.password
+    click_button 'Sign In'
+
+    expect(page).to have_content 'Your account has been suspended. Please contact customer service.'
+  end
 end
