@@ -18,7 +18,7 @@ Myflix::Application.configure do
 
   config.eager_load = false
 
-  # The following configuration results in this error message, event after following the stated gem installations:
+  # The following configuration results in this error message, even after following the stated gem installations:
     # You must install the ruby-growl or the ruby_gntp gem to use Growl notification: `gem install ruby-growl` or `gem install ruby_gntp` (UniformNotifier::NotificationError)
   # Accordingly, cannot use bullet gem functionality.
 
