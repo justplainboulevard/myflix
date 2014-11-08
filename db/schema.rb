@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141106150558) do
+ActiveRecord::Schema.define(version: 20141108000706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,11 +32,15 @@ ActiveRecord::Schema.define(version: 20141106150558) do
     t.string   "token"
   end
 
+  add_index "invitations", ["inviter_id"], name: "index_invitations_on_inviter_id", using: :btree
+
   create_table "payments", force: true do |t|
     t.integer "user_id"
     t.integer "amount"
     t.string  "reference_id"
   end
+
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "queue_items", force: true do |t|
     t.integer  "video_id"
@@ -46,12 +50,18 @@ ActiveRecord::Schema.define(version: 20141106150558) do
     t.datetime "updated_at"
   end
 
+  add_index "queue_items", ["user_id"], name: "index_queue_items_on_user_id", using: :btree
+  add_index "queue_items", ["video_id"], name: "index_queue_items_on_video_id", using: :btree
+
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
     t.integer  "leader_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+  add_index "relationships", ["leader_id"], name: "index_relationships_on_leader_id", using: :btree
 
   create_table "reviews", force: true do |t|
     t.text     "body"
@@ -61,6 +71,9 @@ ActiveRecord::Schema.define(version: 20141106150558) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
+  add_index "reviews", ["video_id"], name: "index_reviews_on_video_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email_address"
@@ -80,6 +93,9 @@ ActiveRecord::Schema.define(version: 20141106150558) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "video_categories", ["category_id"], name: "index_video_categories_on_category_id", using: :btree
+  add_index "video_categories", ["video_id"], name: "index_video_categories_on_video_id", using: :btree
 
   create_table "videos", force: true do |t|
     t.string   "title"
