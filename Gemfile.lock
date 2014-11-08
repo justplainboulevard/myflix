@@ -183,6 +183,10 @@ GEM
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    lol_dba (1.6.4)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      railties (>= 3.0)
     lumberjack (1.0.9)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
@@ -383,6 +387,7 @@ DEPENDENCIES
   jquery-rails (~> 3.1.1)
   launchy
   letter_opener (~> 1.2.0)
+  lol_dba
   mini_magick (~> 3.8.1)
   nested_form (~> 0.3.2)
   paratrooper (~> 2.4.1)
