@@ -40,6 +40,7 @@ GEM
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
     arel (5.0.1.20140414130214)
+    awesome_print (1.2.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -78,6 +79,8 @@ GEM
       timers (~> 1.1.0)
     childprocess (0.5.5)
       ffi (~> 1.0, >= 1.0.11)
+    code_analyzer (0.4.5)
+      sexp_processor
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -88,6 +91,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    colored (1.2)
     connection_pool (2.0.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
@@ -223,6 +227,7 @@ GEM
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
+    railroady (1.2.0)
     rails (4.1.7)
       actionmailer (= 4.1.7)
       actionpack (= 4.1.7)
@@ -236,6 +241,16 @@ GEM
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
+    rails_best_practices (1.15.4)
+      activesupport
+      awesome_print
+      code_analyzer (>= 0.4.3)
+      colored
+      erubis
+      i18n
+      json
+      require_all
+      ruby-progressbar
     rails_serve_static_assets (0.0.2)
     rails_stdout_logging (0.0.3)
     railties (4.1.7)
@@ -253,6 +268,7 @@ GEM
       redis (~> 3.0, >= 3.0.4)
     rendezvous (0.0.2)
     request_store (1.1.0)
+    require_all (1.3.2)
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
@@ -278,6 +294,7 @@ GEM
     rspec-support (3.0.4)
     ruby-growl (4.1)
       uuid (~> 2.3, >= 2.3.5)
+    ruby-progressbar (1.7.0)
     ruby_gntp (0.3.4)
     rubyzip (1.1.6)
     safe_yaml (1.0.4)
@@ -292,6 +309,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    sexp_processor (4.4.4)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
     sidekiq (3.2.6)
@@ -394,8 +412,10 @@ DEPENDENCIES
   pg (~> 0.17.1)
   pry
   pry-doc (~> 0.6.0)
+  railroady
   rails (~> 4.1.4)
   rails_12factor (~> 0.0.2)
+  rails_best_practices
   rspec-mocks
   rspec-rails (~> 3.0.1)
   ruby-growl (~> 4.1)

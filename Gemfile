@@ -38,6 +38,8 @@ group :development do
   gem 'bullet', '~> 4.14.0'
   gem 'letter_opener', '~> 1.2.0'
   gem 'lol_dba'
+  gem 'railroady'
+  gem 'rails_best_practices'
   gem 'ruby_gntp', '~> 0.3.4' # To enable bullet gem.
   gem 'ruby-growl', '~> 4.1' # To enable bullet gem.
   gem 'thin', '~> 1.6.2'
