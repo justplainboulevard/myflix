@@ -1,0 +1,25 @@
+Flashes
+We want to be able to flash messages to the user, indicating that everything is A-OK or not, so we render flashes first of all inside the body, we will create a partial view for this, so start by adding a folder in the app/views directory called application, and inside it create a file called _flashes.html.haml, make note of the leading underscore in the file name. Inside said file, enter:
+
+#flash
+ - flash.each do |type, message|
+ .alert.alert-dismissable{ :class => twitterized_type(type) }
+ %button.close{"data-dismiss" => "alert", "aria-hidden" => "true"} ×
+ %p= message
+Here we take each of the applications flashes and give them a class and content based on the type of flash that is beeing sent, which is determined by our helper twitterized_type, so inside application_helper.rb, add the following:
+
+def twitterized_type(type)
+ case type
+ when :errors
+ "alert-error"
+ when :alert
+ "alert-warning"
+ when :error
+ "alert-error"
+ when :notice
+ "alert-success"
+ else
+ "alert-info"
+ end
+end
+This will add the appropriate bootstrap classes to the alerts so that a success is green, a warning is yellow and so on.

@@ -1,0 +1,238 @@
+
+
+http://www.doidea.se/techblog/rails-application-with-devise-using-ajax
+http://www.jetthoughts.com/blog/tech/2014/08/27/5-steps-to-add-remote-modals-to-your-rails-app.html
+
+
+
+I haven't done this with creating new items, but I have done something similar for edits. I'm not sure if this is the 'cleanest' way of doing it, but it worked for me.
+
+The following works with Rails 3.1, jQuery and coffeescript. If you're using Rails 3.2, I think you now have to put .erb on the end of the coffeescript file. You can use js2coffee to convert the below easily (if you're not using coffeescript).
+
+I defined the dialog code (in /app/views/drops/edit.js.coffee) as:
+
+$("#edit-drop-form").dialog
+  autoOpen: true
+  height: 460
+  width: 380
+  title: 'Edit Drop'
+  buttons:
+    "Cancel": ->
+      $("#edit-drop-form").dialog "close"
+    "Save": ->
+      $.post "/drops/<%= @drop.id %>.json", $("#edit-drop-form form").serializeArray(), (data, text, xhr) ->
+        if (xhr.status == 200)
+          # Update the DOM here!
+          $("#notice").empty().append("Drop updated successfully!")
+          $("#edit-drop-form").dialog "close"
+  open: ->
+    $("#edit-drop-form").html "<%= escape_javascript( render('form') ) %>"
+In the above example, the 'form' partial will be rendered in the popup and a json handler in the 'update' action of my Drops controller will process the request.
+
+To change this for creating new items, add a 'json' handler for the create action and have a similar javascript file to the above (but called new.js.coffee). You'll also need to adjust the path for the 'post' to the create action.
+
+Where my comment says "Update the DOM here", is where you'll want to update your select. Simply create a json handler for the 'index' action of IngredientsController, call '$.get "/ingredients.json"' and replace the contents of your select based on the data that returns.
+
+
+
+
+
+
+
+
+Project Controller
+******************************************************
+class ProjectsController < ApplicationController
+  respond_to :html, :js
+
+  def index
+    @customer = Customer.find(params[:customer_id])
+  end
+
+  def new
+    customer = Customer.find(params[:customer_id])
+    @project = customer.projects.new
+  end
+
+  def create
+    @customer = Customer.find(params[:customer_id])
+    @project = Customer.projects.create(project_params)
+  end
+
+  private
+
+  def project_params
+    params.require(:project).permit(:project_name, :project_description, :project_started, :project_estimated_to_end, :project_status)
+  end
+
+end
+***************************************************
+Project model and Customer model
+**************************************************
+class Project < ActiveRecord::Base
+  belongs_to :customer
+end
+
+class Customer < ActiveRecord::Base
+  has_many :projects
+
+  validates :customer_name, presence: true
+  validates :customer_company, presence: true
+  validates :customer_email, presence: true
+  validates :customer_desc, presence: true
+end
+
+****************************************************
+projects/_form.html.erb
+
+***************************************************
+
+<%= form_for @project, remote: true, html: { class: "form-horizontal", style: "display:inline;" } do |f| %>
+
+  <div class="modal-body">
+    <ul class="errors"></ul>
+
+    <div class="control-group">
+      <%= f.label :project_name, class:"control-label" %>
+      <div class="controls">
+        <%= f.text_field :project_name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :project_started, class: "control-label" %>
+      <div class="controls">
+        <%= f.date_select :project_started %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :project_estimated_to_end, class: "control-label" %>
+      <div class="controls">
+        <%= f.date_select :project_estimated_to_end %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :project_status, class: "control-label" %>
+      <div class="controls">
+        <%= f.select :project_status,['Doing','Done'], prompt: true %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :project_description, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :project_description %>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", "#", class: "btn", data: {dismiss: "modal"} %>
+  </div>
+<% end %>
+
+*********************************************
+projects/_index.html.erb
+*********************************************
+
+<% @customer.projects.each do |project| %>
+  <tr>
+    <td><%= project.project_name %></td>
+  <td><%= project.project_description %></td>
+  <td><%= project.project_started %></td>
+  <td><%= project.project_estimated_to_end %></td>
+  <td><%= project.project_status %></td>
+  </tr>
+<% end %>
+
+***********************************************
+
+projects/_new.html.erb
+***********************************************
+<div class="modal-header">
+<h3>New Project</h3>
+</div>
+<%= render "form" %>
+
+**********************************************
+projects/_save.html.erb
+
+*********************************************
+$("ul.errors").html("")
+<% if @project.errors.any? %>
+  <% @project.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+  $(".product-index").html("<%= escape_javascript(render 'index') %>")
+  $("#product-modal").modal("hide")
+<% end %>
+
+******************************************
+projects/create.js.erb
+******************************************
+<%= render "save" %>
+
+******************************************
+
+projects/index.html.erb
+************************************
+
+<section class="container">
+  <section class="row">
+    <h1>Project Table</h1>
+
+    <%= link_to "New Project", new_customer_project_path(@customer), remote: true, class: "btn btn-primary" %>
+
+    <div class="new-product"></div>
+
+    <table class='table' id='people_table'>
+      <thead>
+        <tr>
+          <th>Project Name</th>
+          <th>Project Description</th>
+          <th>Projct Started</th>
+          <th>Project Estimated to end</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody class="product-index">
+        <%= render "index" %>
+      </tbody>
+
+    </table>
+
+    <div id="product-modal" class="modal fade">
+      <div class="modal-dialog">
+       <div id="inner-product-modal" class="modal-content"></div>
+      </div>
+    </div>
+  </section>
+</section>
+
+**********************************
+
+projects/new.js.erb
+*******************************************
+
+$("#inner-product-modal").html("<%= escape_javascript(render 'new') %>")
+$("#product-modal").modal("show")
+*************************************************
+
+routes.rb
+
+  resources :customers do
+    get "delete"
+    resources :projects
+  end
+
+  resources :projects
+
+
+  root :to => "customers#index"
+
+
+
+
+
+
