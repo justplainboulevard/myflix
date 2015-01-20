@@ -43,36 +43,48 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.before(:suite) do
+
     DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do
+
     DatabaseCleaner.strategy = :truncation
   end
 
   config.before(:each, :js => true) do
+
     DatabaseCleaner.strategy = :truncation
   end
 
   config.before(:each) do
+
     DatabaseCleaner.start
   end
 
   config.after(:each) do
+
     DatabaseCleaner.clean
   end
 
   config.before(:each) do |example|
+
     Sidekiq::Worker.clear_all
 
     if example.metadata[:sidekiq] == :fake
+
       Sidekiq::Testing.fake!
+
     elsif example.metadata[:sidekiq] == :inline
+
       Sidekiq::Testing.inline!
-    elsif example.metadata[:type] == :acceptance
+
+    elsif example.metadata[:type] == :feature
+
       Sidekiq::Testing.inline!
     else
-      Sidekiq::Testing.inline! # documentation has default as 'fake!'
+
+      Sidekiq::Testing.fake!
     end
   end
 end

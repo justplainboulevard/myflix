@@ -25,6 +25,8 @@ gem 'pg', '~> 0.17.1'
 gem 'sass-rails', '~> 4.0.3'
 gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
 gem 'sidekiq', '~> 3.2.5'
+gem 'sinatra', require: false
+gem 'slim'
 gem 'stripe', '~> 1.15.0'
 gem 'stripe_event', '~> 1.3.0'
 gem 'uglifier', '~> 2.5.3'
@@ -52,7 +54,7 @@ group :development, :test do
   gem 'pry-doc', '~> 0.6.0'
   gem 'rspec-mocks'
   gem 'rspec-rails', '~> 3.0.1'
-  # gem 'rspec-sidekiq', '~> 1.1.0'
+  gem 'rspec-sidekiq'
 end
 
 group :test do
