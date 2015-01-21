@@ -8,25 +8,25 @@ RSpec.feature 'visitor registers', js: true do
   let(:full_name) { 'William Tecumseh Sherman' }
 
   # Test card numbers available from Stripe:
-  let(:visa_credit_card_1) { '4242424242424242' }
-  let(:visa_credit_card_2) { '4012888888881881' }
-  let(:visa_debit_card) { '4000056655665556' }
-  let(:mastercard_credit_card) { '5555555555554444' }
-  let(:mastercard_debit_card) { '5200828282828210' }
-  let(:mastercard_prepaid_card) { '5105105105105100' }
+  let(:visa_credit_card_1)             { '4242424242424242' }
+  let(:visa_credit_card_2)             { '4012888888881881' }
+  let(:visa_debit_card)                { '4000056655665556' }
+  let(:mastercard_credit_card)         { '5555555555554444' }
+  let(:mastercard_debit_card)          { '5200828282828210' }
+  let(:mastercard_prepaid_card)        { '5105105105105100' }
   let(:american_express_credit_card_1) { '378282246310005' }
   let(:american_express_credit_card_2) { '371449635398431' }
-  let(:discover_credit_card_1) { '6011111111111117' }
-  let(:discover_credit_card_2) { '6011000990139424' }
-  let(:diners_club_credit_card_1) { '30569309025904' }
-  let(:diners_club_credit_card_2) { '38520000023237' }
-  let(:jcb_credit_card_1) { '3530111333300000' }
-  let(:jcb_credit_card_2) { '3566002020360505' }
-  let(:card_declined) { '4000000000000002' }
-  let(:incorrect_cvc) { '4000000000000127' }
-  let(:expired_card) { '4000000000000069' }
-  let(:processing_error) { '4000000000000119' }
-  let(:incorrect_number) { '4242424242424241' }
+  let(:discover_credit_card_1)         { '6011111111111117' }
+  let(:discover_credit_card_2)         { '6011000990139424' }
+  let(:diners_club_credit_card_1)      { '30569309025904' }
+  let(:diners_club_credit_card_2)      { '38520000023237' }
+  let(:jcb_credit_card_1)              { '3530111333300000' }
+  let(:jcb_credit_card_2)              { '3566002020360505' }
+  let(:card_declined)                  { '4000000000000002' }
+  let(:incorrect_cvc)                  { '4000000000000127' }
+  let(:expired_card)                   { '4000000000000069' }
+  let(:processing_error)               { '4000000000000119' }
+  let(:incorrect_number)               { '4242424242424241' }
 
   background { visit register_path }
 
