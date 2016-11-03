@@ -1,7 +1,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.2.3'
+ruby '2.3.0'
 
 gem 'rails', '~> 4.1.4'
 
@@ -60,7 +60,7 @@ end
 group :test do
   gem 'capybara', '~> 2.4.1'
   gem 'capybara-email', '~> 2.4.0'
-  gem 'capybara-webkit', '~> 1.3.0'
+  # gem 'capybara-webkit', '~> 1.3.0'
   gem 'database_cleaner', '1.2.0'
   gem 'launchy'
   gem 'selenium-webdriver'
